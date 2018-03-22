@@ -4,10 +4,10 @@ import { Provider } from 'react-redux'
 import { renderToString } from 'react-dom/server'
 import { StaticRouter } from 'react-router-dom'
 
-import IntlWrapper from '../client/modules/Intl/IntlWrapper'
-import { switchLanguage } from '../client/modules/Intl/IntlActions'
-
-import store from '../client/store'
+import IntlWrapper from '../modules/Intl/IntlWrapper'
+import { switchLanguage } from '../modules/Intl/IntlActions'
+// import routes from '../client/routes'
+import newStore from '../client/store'
 import App from '../client/App'
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
@@ -31,16 +31,17 @@ const renderFullPage = (markup, preloadedState) => {
     <body>
         <div id="root">${markup}</div>
     </body>
+    <script type="text/javascript">window.__INITIAL_STATE__ = ${JSON.stringify(preloadedState)}</script>
   </html>
   `
 }
 
 export const handleRender = (req, res) => {
+  const store = newStore()
   store.dispatch(switchLanguage(req.headers['accept-language'].split('-')[0]))
 
-  // Render the component to a string
-  const html = renderToString(
-    <Provider store={store}>
+  const app = (
+    <Provider store={store} >
       <IntlWrapper>
         <StaticRouter location={req.url} context={{}}>
           <App />
@@ -48,10 +49,17 @@ export const handleRender = (req, res) => {
       </IntlWrapper>
     </Provider>
   )
+  renderToString(app)
 
-  // Grab the initial state from our Redux store
-  const preloadedState = store.getState()
+  Promise.all(store.getState().prefetch).then(() => {
+    // Render the component to a string
+    const html = renderToString(app)
 
-  // Send the rendered page back to the client
-  res.send(renderFullPage(html, preloadedState))
+    // Grab the initial state from our Redux store
+    let preloadedState = store.getState()
+    let { prefetch, ...clientStore } = preloadedState
+
+    // Send the rendered page back to the client
+    res.send(renderFullPage(html, clientStore))
+  })
 }

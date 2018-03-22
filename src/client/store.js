@@ -7,6 +7,6 @@ import rootReducer from './reducers';
 
 let initialState = {};
 // const store = createStore(rootReducer, initialState, compose(...enhancers));
-const store = createStore(rootReducer, initialState);
+const newStore = (init) => createStore(rootReducer, init || initialState);
 
-export default store;
+export default newStore;

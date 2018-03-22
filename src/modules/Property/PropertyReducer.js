@@ -1,10 +1,15 @@
 // Initial State
-const initialState = [];
+const initialState = {
+  propertyType: []
+};
 
 const PropertyReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'PROPERTY_TYPE':
-      return action.propertyType
+      return {
+        ...state,
+        propertyType: action.propertyType
+      }
     default:
       return state;
   }
@@ -13,7 +18,7 @@ const PropertyReducer = (state = initialState, action) => {
 /* Selectors */
 
 // Get all posts
-export const getPropertyType = state => state.property;
+export const getPropertyType = state => state.property.propertyType;
 
 // Export Reducer
 export default PropertyReducer;

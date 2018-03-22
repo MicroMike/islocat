@@ -1,3 +1,17 @@
+Installer nodeJS
+
+https://nodejs.org/en/
+
+git clone https://github.com/MicroMike/islocat.git
+
+cd islocat
+
+npm i
+
+npm start
+
+http://localhost:3000
+
 ![repo-banner](https://user-images.githubusercontent.com/4060187/28923990-050a32d4-782e-11e7-9da7-574ce5a8b455.png)
 
 [![CircleCI](https://circleci.com/gh/jaredpalmer/razzle/tree/master.svg?style=svg)](https://circleci.com/gh/jaredpalmer/razzle/tree/master) ![Razzle-status](https://david-dm.org/jaredpalmer/razzle.svg?path=packages/razzle) [![npm version](https://badge.fury.io/js/razzle.svg)](https://badge.fury.io/js/razzle)

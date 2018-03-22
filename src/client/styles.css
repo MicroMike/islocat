@@ -4,6 +4,10 @@ body {
     font-family: sans-serif;
 }
 
+#main-container {
+    margin: 20px;
+}
+
 .rtl {
     text-align: right;
 }

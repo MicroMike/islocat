@@ -4,8 +4,10 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { hydrate } from 'react-dom';
 
-import store from './client/store'
-import IntlWrapper from './client/modules/Intl/IntlWrapper';
+import newStore from './client/store';
+import IntlWrapper from './modules/Intl/IntlWrapper';
+
+const store = newStore(window.__INITIAL_STATE__)
 
 hydrate(
   <Provider store={store} >

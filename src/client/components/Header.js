@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 // Import Style
 import './assets/Header.css';
 
-import { switchLanguage } from '../modules/Intl/IntlActions'
+import { switchLanguage } from '../../modules/Intl/IntlActions'
 
 export function Header(props, context) {
   const languageNodes = props.intl.enabledLanguages.map(

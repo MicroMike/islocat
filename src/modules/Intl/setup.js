@@ -49,7 +49,7 @@ if (global.Intl) {
 function flattenMessages(nestedMessages = {}, prefix = '') {
   return Object.keys(nestedMessages).reduce((messages, key) => {
     const value = nestedMessages[key];
-    const prefixedKey = prefix ? `${prefix}_${key}` : key;
+    const prefixedKey = prefix ? `${prefix}.${key}` : key;
 
     if (typeof value === 'string') {
       messages[prefixedKey] = value; // eslint-disable-line no-param-reassign
@@ -84,23 +84,23 @@ let languages = [];
 for (const language of enabledLanguages) {
   languages[language] = {
     locale: language,
-    messages: getLangue(LanguageData, null, language)
+    strings: getLangue(LanguageData, null, language)
   }
 }
 
 // bring in intl polyfill, react-intl, and app-specific language data
 addLocaleData(en);
 localizationData.en = languages['en'];
-localizationData.en.messages = flattenMessages(localizationData.en.messages);
+localizationData.en.messages = flattenMessages(localizationData.en.strings);
 
 addLocaleData(fr);
 localizationData.fr = languages['fr'];
-localizationData.fr.messages = flattenMessages(localizationData.fr.messages);
+localizationData.fr.messages = flattenMessages(localizationData.fr.strings);
 
 addLocaleData(he);
 localizationData.he = languages['he'];
-localizationData.he.messages = flattenMessages(localizationData.he.messages);
+localizationData.he.messages = flattenMessages(localizationData.he.strings);
 
 addLocaleData(ru);
 localizationData.ru = languages['ru'];
-localizationData.ru.messages = flattenMessages(localizationData.ru.messages);
+localizationData.ru.messages = flattenMessages(localizationData.ru.strings);
