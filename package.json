@@ -6,7 +6,7 @@
     "start:dev": "razzle start",
     "build": "razzle build",
     "test": "razzle test --env=jsdom",
-    "start": "npm run build && cross-env NODE_ENV=production node build/server.js"
+    "start": "npm run build && node build/server.js"
   },
   "dependencies": {
     "cuid": "^2.1.0",
