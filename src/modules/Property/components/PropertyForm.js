@@ -40,7 +40,7 @@ class PropertyForm extends Component {
   }
 
   componentWillMount() {
-    if (this.props.propertyType.length === 0) {
+    if (!this.props.propertyType && this.props.propertyType.length === 0) {
       this.props.fetchPropertyType()
     }
   }
