@@ -7,8 +7,10 @@ const app = Express()
 
 app.disable('x-powered-by')
 
+let staticFolder = process.env.NODE_ENV === 'production' ? 'build/public/static' : 'static'
+
 //Serve static files
-app.use('/static', Express.static('static'))
+app.use('/static', Express.static(staticFolder))
 
 app.use('/api', routes)
 
