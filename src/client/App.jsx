@@ -3,7 +3,7 @@ import Route from 'react-router-dom/Route';
 import Switch from 'react-router-dom/Switch';
 import { connect } from 'react-redux'
 
-import './styles.css';
+import './App.css';
 
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -12,9 +12,9 @@ import Home from '../modules/Home/Home'
 import Owner from '../modules/Property/pages/OwnerPage'
 
 const App = ({ locale }) => (
-  <div>
+  <div className={locale === 'he' ? 'rtl' : ''}>
     <Header />
-    <div id="main-container" className={locale === 'he' ? 'rtl' : ''} >
+    <div id="main-container" >
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/owner" component={Owner} />

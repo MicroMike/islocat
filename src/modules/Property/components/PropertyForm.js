@@ -7,26 +7,26 @@ import './PropertyForm.css'
 import { fetchPropertyType } from '../PropertyAction';
 import { getPropertyType } from '../PropertyReducer';
 
-const PropertyType = ({ propertyType, onChange }) => (
-  <div className="property-type" >
-    <input type="radio" name="propertyType" id={propertyType} value={propertyType} />
-    <label htmlFor={propertyType}>
-      <FormattedMessage id={'form.propertyType.' + propertyType} />
+const Input = (props) => {
+  const { label, checked, ...input } = props
+
+  return (
+    <label htmlFor={props.propertyType} className={checked ? 'active' : ''} >
+      <FormattedMessage id={label} />
+      <input id={props.name} {...input} />
     </label>
-  </div >
-)
+  )
+}
 
 const Rooms = ({ propertyType }) => {
-  if (!propertyType || propertyType === 'studio') {
+  if (propertyType === 'studio') {
     return null
   }
 
   return (
     <div>
-      <p><FormattedMessage id="form.nbRoom.label" /> :</p>
-      <input type="number" name="nbRoom" />
-      <p><FormattedMessage id="form.nbBedroom.label" /> :</p>
-      <input type="number" name="nbBedroom" />
+      <Input type="number" name="nbRoom" label="form.nbRoom.label" />
+      <Input type="number" name="nbBedroom" label="form.nbBedroom.label" />
     </div>
   )
 }
@@ -67,19 +67,25 @@ class PropertyForm extends Component {
     return (
       <form id="owner-form" onChange={(e) => this.update(e)} onSubmit={this.handleSubmit.bind(this)} >
 
-        <p><FormattedMessage id="form.propertyType.label" /> :</p>
-        {this.props.propertyType.map(type => (<PropertyType key={type._id} propertyType={type.name} />))}
+        <div className="property-type" >
+          <FormattedMessage id="form.propertyType.label" />
+          {this.props.propertyType.map(type => (
+            <Input
+              type="radio"
+              key={type._id}
+              className="property-type"
+              name="propertyType"
+              value={type.name}
+              checked={this.state.propertyType === type.name ? 'checked' : ''}
+              label={"form.propertyType." + type.name} />)
+          )}
+        </div>
 
         <Rooms propertyType={this.state.propertyType} />
 
-        <p><FormattedMessage id="form.area.label" /> :</p>
-        <input type="number" name="area" />
+        <Input type="number" name="area" label="form.area.label" />
 
-        <p><FormattedMessage id="form.availableDate.label" /> :</p>
-        <input type="date" name="availableDate" />
-
-        <br />
-        <br />
+        <Input type="date" name="availableDate" label="form.availableDate.label" />
 
         <input type="submit" name="submit" value={this.props.strings.submit} />
       </form>
