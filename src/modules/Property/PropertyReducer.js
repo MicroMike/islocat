@@ -18,7 +18,9 @@ const PropertyReducer = (state = initialState, action) => {
 /* Selectors */
 
 // Get all posts
-export const getPropertyType = state => state.property.propertyType;
+// export const getPropertyType = state => state.property.propertyType;
+
+export const getPropertyType = state => state.property.propertyType.map(propertyType => propertyType.name)
 
 // Export Reducer
 export default PropertyReducer;

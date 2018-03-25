@@ -29,10 +29,10 @@ export function Header(props, context) {
         </h1>
         <div className='user-type'>
           <h2>
-            <Link to="/owner"><FormattedMessage id="owner" /></Link>
+            <Link to="/owner"><FormattedMessage id="commons.owner" /></Link>
           </h2>
           <h2>
-            <Link to="/resident"><FormattedMessage id="resident" /></Link>
+            <Link to="/resident"><FormattedMessage id="commons.resident" /></Link>
           </h2>
         </div>
         {/*
