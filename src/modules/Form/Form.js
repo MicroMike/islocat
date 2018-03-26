@@ -1,6 +1,8 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
+import './Form.css'
+
 export const Input = (props) => {
   const { label, isChecked, ...input } = props
   const checked = isChecked ? 'active' : ''
@@ -13,7 +15,9 @@ export const Input = (props) => {
   )
 }
 
-const RadioCheckbox = ({ type, choices, label, name, state }) => {
+const RadioCheckbox = ({ type, choices, form, name, state }) => {
+  const label = form + '.' + name + '.'
+
   return (
     <div className="radio-checkbox" >
       <FormattedMessage id={label + 'label'} />
@@ -46,3 +50,14 @@ export const Radio = (props) => (
 export const Checkbox = (props) => (
   <RadioCheckbox {...props} type="checkbox" />
 )
+
+export const Select = (props) => {
+  return (
+    <div className="select" >
+      <FormattedMessage id={props.form + '.' + props.name} />
+      <select name={props.name} >
+        {props.options}
+      </select>
+    </div>
+  )
+}

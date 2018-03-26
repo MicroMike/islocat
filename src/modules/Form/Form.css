@@ -1,16 +1,18 @@
-#owner-form input {
+form input {
     margin-top: 5px;
 }
 
-#owner-form label,
-#owner-form input[type="submit"],
-#owner-form .radio-checkbox>span {
+form select,
+form label,
+form input[type="submit"],
+form .select>span,
+form .radio-checkbox>span {
     margin: 0 10px;
     margin-top: 10px;
     display: block;
 }
 
-#owner-form .radio-checkbox label {
+form .radio-checkbox label {
     padding: 5px;
     margin: 0 10px;
     margin-top: 10px;
@@ -19,20 +21,20 @@
     cursor: pointer;
 }
 
-#owner-form .radio-checkbox label.active {
+form .radio-checkbox label.active {
     background: #006fb8;
     color: #fff;
 }
 
-#owner-form input {
+form input {
     margin: 0 10px;
 }
 
-#owner-form input[type="radio"],
-#owner-form input[type="checkbox"] {
+form input[type="radio"],
+form input[type="checkbox"] {
     display: none;
 }
 
-.rtl label span {
+.rtl form label span {
     float: right;
 }

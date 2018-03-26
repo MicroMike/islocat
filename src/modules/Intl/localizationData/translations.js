@@ -101,6 +101,12 @@ export default {
       he: 'דמי השכירות',
       ru: 'Ежемесячная аренда',
     },
+    floor: {
+      en: 'Floor',
+      fr: 'Etage',
+      he: 'רצפה',
+      ru: 'пол',
+    },
     locationOptions: {
       label: {
         en: 'Options',
@@ -126,11 +132,29 @@ export default {
         he: 'אפוטרופוס',
         ru: 'опекун',
       },
-      floor: {
-        en: 'Floor',
-        fr: 'Etage',
-        he: 'רצפה',
-        ru: 'пол',
+      carPark: {
+        en: 'Car park',
+        fr: 'Parking',
+      },
+      cellar: {
+        en: 'Cellar',
+        fr: 'Cave',
+      },
+      elevator: {
+        en: 'Elevator',
+        fr: 'Ascenseur',
+      },
+      intercom: {
+        en: 'Intercom',
+        fr: 'Interphone',
+      },
+      groundFloor: {
+        en: 'Ground floor',
+        fr: 'Rez de chaussée',
+      },
+      lastFloor: {
+        en: 'Last floor',
+        fr: 'Dernier étage',
       },
     },
   },
