@@ -126,6 +126,12 @@ export default {
         he: 'אפוטרופוס',
         ru: 'опекун',
       },
+      floor: {
+        en: 'Floor',
+        fr: 'Etage',
+        he: 'רצפה',
+        ru: 'пол',
+      },
     },
   },
 };
