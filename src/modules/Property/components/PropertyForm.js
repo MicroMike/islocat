@@ -1,63 +1,12 @@
 import React, { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
+// import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux'
 import './PropertyForm.css'
 
-// import callApi from '../../../utils/callApi'
 import { fetchPropertyType } from '../PropertyAction';
 import { getPropertyType } from '../PropertyReducer';
 
-const Input = (props) => {
-  const { label, isChecked, ...input } = props
-  const checked = isChecked ? 'active' : ''
-
-  return (
-    <label htmlFor={props.id} className={checked} >
-      <FormattedMessage id={label} />
-      <input {...input} />
-    </label>
-  )
-}
-
-const Radio = (props) => {
-  const label = 'ownerForm.' + props.name + '.'
-
-  return (
-    <div className="radio-checkbox" >
-      <FormattedMessage id={label + 'label'} />
-      {props.choices.map(choice => (
-        <Input
-          key={props.name + '-' + choice}
-          type="radio"
-          name={props.name}
-          label={label + choice}
-          id={props.name + '-' + choice}
-          value={choice}
-          isChecked={props.checked[props.name] === choice}
-        />
-      ))}
-    </div>
-  )
-}
-
-const Checkbox = (props) => {
-  const label = 'ownerForm.' + props.name + '.'
-
-  return (
-    <div className="radio-checkbox" >
-      <FormattedMessage id={label + 'label'} />
-      {props.choices.map(choice => (
-        <Input
-          key={props.name + '-' + choice}
-          type="checkbox"
-          name={choice}
-          label={"ownerForm." + props.name + "." + choice}
-          isChecked={props.state[choice]}
-        />
-      ))}
-    </div>
-  )
-}
+import { Radio, Checkbox, Input } from '../../Form/Form'
 
 const Rooms = ({ propertyType }) => {
   if (propertyType === 'studio') {
@@ -107,7 +56,7 @@ class PropertyForm extends Component {
     return (
       <form id="owner-form" onChange={(e) => this.update(e)} onSubmit={this.handleSubmit.bind(this)} >
 
-        <Radio name="propertyType" choices={this.props.propertyType} checked={this.state} />
+        <Radio label="ownerForm.propertyType." name="propertyType" choices={this.props.propertyType} state={this.state} />
 
         <Rooms propertyType={this.state.propertyType} />
 
@@ -119,7 +68,7 @@ class PropertyForm extends Component {
 
         <Input type="number" name="rentalCharges" label="ownerForm.rentalCharges" />
 
-        <Checkbox name="locationOptions" choices={locationOptions} state={this.state} />
+        <Checkbox label="ownerForm.locationOptions." name="locationOptions" choices={locationOptions} state={this.state} />
 
         <input type="submit" name="submit" value={this.props.strings.submit} />
       </form>
