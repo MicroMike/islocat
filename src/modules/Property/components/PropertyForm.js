@@ -1,73 +1,23 @@
 import React, { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
+// import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux'
-import './PropertyForm.css'
 
-// import callApi from '../../../utils/callApi'
 import { fetchPropertyType } from '../PropertyAction';
 import { getPropertyType } from '../PropertyReducer';
 
-const Input = (props) => {
-  const { label, isChecked, ...input } = props
-  const checked = isChecked ? 'active' : ''
+import { Radio, NumberRadio, Checkbox, Input } from '../../Form/Form'
 
-  return (
-    <label htmlFor={props.id} className={checked} >
-      <FormattedMessage id={label} />
-      <input {...input} />
-    </label>
-  )
-}
-
-const Radio = (props) => {
-  const label = 'ownerForm.' + props.name + '.'
-
-  return (
-    <div className="radio-checkbox" >
-      <FormattedMessage id={label + 'label'} />
-      {props.choices.map(choice => (
-        <Input
-          key={props.name + '-' + choice}
-          type="radio"
-          name={props.name}
-          label={label + choice}
-          id={props.name + '-' + choice}
-          value={choice}
-          isChecked={props.checked[props.name] === choice}
-        />
-      ))}
-    </div>
-  )
-}
-
-const Checkbox = (props) => {
-  const label = 'ownerForm.' + props.name + '.'
-
-  return (
-    <div className="radio-checkbox" >
-      <FormattedMessage id={label + 'label'} />
-      {props.choices.map(choice => (
-        <Input
-          key={props.name + '-' + choice}
-          type="checkbox"
-          name={choice}
-          label={"ownerForm." + props.name + "." + choice}
-          isChecked={props.state[choice]}
-        />
-      ))}
-    </div>
-  )
-}
-
-const Rooms = ({ propertyType }) => {
-  if (propertyType === 'studio') {
+const Rooms = ({ state }) => {
+  if (state.propertyType === 'studio') {
     return null
   }
 
   return (
     <div>
-      <Input type="number" name="nbRoom" label="ownerForm.nbRoom" />
-      <Input type="number" name="nbBedroom" label="ownerForm.nbBedroom" />
+      <NumberRadio name="nbRoom" label="ownerForm.nbRoom" min={1} max={5} state={state} />
+      <NumberRadio name="nbBedroom" label="ownerForm.nbBedroom" min={1} max={5} state={state} />
+      {/* <Input type="number" name="nbRoom" label="ownerForm.nbRoom" /> */}
+      {/* <Input type="number" name="nbBedroom" label="ownerForm.nbBedroom" /> */}
     </div>
   )
 }
@@ -77,6 +27,18 @@ class PropertyForm extends Component {
     super(props)
 
     this.state = {}
+
+    this.locationOptions = [
+      'furnished',
+      'airConditioner',
+      'guardian',
+      'carPark',
+      'cellar',
+      'elevator',
+      'intercom',
+      'groundFloor',
+      'lastFloor',
+    ]
   }
 
   componentWillMount() {
@@ -86,9 +48,9 @@ class PropertyForm extends Component {
   }
 
   update(e) {
-    const update = {}
-    console.log(e.target.checked)
-    update[e.target.name] = e.target.type === 'checkbox' ? e.target.checked : e.target.value
+    const update = {
+      [e.target.name]: e.target.type === 'checkbox' ? e.target.checked : e.target.value
+    }
     this.setState(update)
   }
 
@@ -98,28 +60,22 @@ class PropertyForm extends Component {
   }
 
   render() {
-    const locationOptions = [
-      'furnished',
-      'airConditioner',
-      'guardian'
-    ]
 
     return (
       <form id="owner-form" onChange={(e) => this.update(e)} onSubmit={this.handleSubmit.bind(this)} >
 
-        <Radio name="propertyType" choices={this.props.propertyType} checked={this.state} />
-
-        <Rooms propertyType={this.state.propertyType} />
-
+        <Radio form="ownerForm" name="propertyType" choices={this.props.propertyType} state={this.state} />
+        <hr />
+        <Rooms state={this.state} />
         <Input type="number" name="area" label="ownerForm.area" />
-
-        <Input type="date" name="availableDate" label="ownerForm.availableDate" />
-
         <Input type="number" name="monthlyRent" label="ownerForm.monthlyRent" />
-
         <Input type="number" name="rentalCharges" label="ownerForm.rentalCharges" />
-
-        <Checkbox name="locationOptions" choices={locationOptions} state={this.state} />
+        <Input type="date" name="availableDate" label="ownerForm.availableDate" />
+        <hr />
+        <NumberRadio name="floor" label="ownerForm.floor" max={10} state={this.state} />
+        <Checkbox form="ownerForm" name="locationOptions" choices={this.locationOptions} state={this.state} />
+        <hr />
+        {/* <Input type="text" name="street" label="ownerForm.location.street" /> */}
 
         <input type="submit" name="submit" value={this.props.strings.submit} />
       </form>

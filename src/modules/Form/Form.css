@@ -1,0 +1,47 @@
+form input {
+    margin-top: 5px;
+}
+
+form select,
+form label,
+form input[type="submit"],
+form .select>span,
+form .radio-checkbox>span {
+    margin: 0 10px;
+    margin-top: 10px;
+    display: block;
+}
+
+.radio-checkbox::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+form .radio-checkbox label {
+    padding: 5px;
+    margin: 0 10px;
+    margin-top: 10px;
+    display: inline-block;
+    border: 1px solid #0085da;
+    cursor: pointer;
+}
+
+form .radio-checkbox label.active {
+    background: #006fb8;
+    color: #fff;
+}
+
+form input {
+    margin: 0 10px;
+}
+
+form input[type="radio"],
+form input[type="checkbox"] {
+    display: none;
+}
+
+.rtl form label span,
+.rtl form .radio-checkbox label {
+    float: right;
+}
