@@ -12,6 +12,12 @@ form .radio-checkbox>span {
     display: block;
 }
 
+.radio-checkbox::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
 form .radio-checkbox label {
     padding: 5px;
     margin: 0 10px;
@@ -35,6 +41,7 @@ form input[type="checkbox"] {
     display: none;
 }
 
-.rtl form label span {
+.rtl form label span,
+.rtl form .radio-checkbox label {
     float: right;
 }

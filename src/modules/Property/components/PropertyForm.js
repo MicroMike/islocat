@@ -5,17 +5,19 @@ import { connect } from 'react-redux'
 import { fetchPropertyType } from '../PropertyAction';
 import { getPropertyType } from '../PropertyReducer';
 
-import { Radio, Checkbox, Input, Select } from '../../Form/Form'
+import { Radio, NumberRadio, Checkbox, Input } from '../../Form/Form'
 
-const Rooms = ({ propertyType }) => {
-  if (propertyType === 'studio') {
+const Rooms = ({ state }) => {
+  if (state.propertyType === 'studio') {
     return null
   }
 
   return (
     <div>
-      <Input type="number" name="nbRoom" label="ownerForm.nbRoom" />
-      <Input type="number" name="nbBedroom" label="ownerForm.nbBedroom" />
+      <NumberRadio name="nbRoom" label="ownerForm.nbRoom" min={1} max={5} state={state} />
+      <NumberRadio name="nbBedroom" label="ownerForm.nbBedroom" min={1} max={5} state={state} />
+      {/* <Input type="number" name="nbRoom" label="ownerForm.nbRoom" /> */}
+      {/* <Input type="number" name="nbBedroom" label="ownerForm.nbBedroom" /> */}
     </div>
   )
 }
@@ -37,14 +39,6 @@ class PropertyForm extends Component {
       'groundFloor',
       'lastFloor',
     ]
-
-    this.selectFloor = []
-    let i = 0
-
-    for (i; i < 10; i++) {
-      this.selectFloor.push(<option key={i} >{i}</option>)
-    }
-    this.selectFloor.push(<option key={i} value={i} >{i + '+'}</option>)
   }
 
   componentWillMount() {
@@ -54,9 +48,9 @@ class PropertyForm extends Component {
   }
 
   update(e) {
-    const update = {}
-    console.log(e.target.checked)
-    update[e.target.name] = e.target.type === 'checkbox' ? e.target.checked : e.target.value
+    const update = {
+      [e.target.name]: e.target.type === 'checkbox' ? e.target.checked : e.target.value
+    }
     this.setState(update)
   }
 
@@ -72,16 +66,16 @@ class PropertyForm extends Component {
 
         <Radio form="ownerForm" name="propertyType" choices={this.props.propertyType} state={this.state} />
         <hr />
-        <Rooms propertyType={this.state.propertyType} />
+        <Rooms state={this.state} />
         <Input type="number" name="area" label="ownerForm.area" />
         <Input type="number" name="monthlyRent" label="ownerForm.monthlyRent" />
         <Input type="number" name="rentalCharges" label="ownerForm.rentalCharges" />
         <Input type="date" name="availableDate" label="ownerForm.availableDate" />
         <hr />
-        <Select form="ownerForm" name="floor" options={this.selectFloor} />
+        <NumberRadio name="floor" label="ownerForm.floor" max={10} state={this.state} />
         <Checkbox form="ownerForm" name="locationOptions" choices={this.locationOptions} state={this.state} />
         <hr />
-        <Input type="text" name="street" label="ownerForm.location.street" />
+        {/* <Input type="text" name="street" label="ownerForm.location.street" /> */}
 
         <input type="submit" name="submit" value={this.props.strings.submit} />
       </form>
