@@ -36,13 +36,21 @@ export default {
       fr: 'Envoyer',
       he: 'שלח',
       ru: 'Отправить',
-    }
+    },
+    previous: {
+      en: 'Previous',
+      fr: 'Précédent'
+    },
+    next: {
+      en: 'Next',
+      fr: 'Suivant'
+    },
   },
   ownerForm: {
     propertyType: {
       label: {
-        en: 'Choose the type of housing',
-        fr: 'Choisir le type de logement',
+        en: 'Type of housing',
+        fr: 'Type de logement',
         he: 'בחר את סוג הדיור',
         ru: 'Выберите тип корпуса',
       },
@@ -73,47 +81,63 @@ export default {
         fr: 'Penthouse',
       },
     },
-    nbRoom: {
-      en: 'Number of pieces',
-      fr: 'Nombre de pièces',
-      he: 'מספר החדרים',
-      ru: 'Количество номеров',
+    energyClass: {
+      label: {
+        en: 'Energy class',
+        fr: 'Classe énergétique',
+      },
+      pending: {
+        en: 'Pending',
+        fr: 'En cours'
+      }
     },
-    nbBedroom: {
-      en: 'Number of rooms',
-      fr: 'Nombre de chambres',
-      he: 'מספר החדרים',
-      ru: 'Количество номеров',
-    },
-    area: {
-      en: 'Area',
-      fr: 'Superficie',
-      he: 'אזור',
-      ru: 'область',
-    },
-    availableDate: {
-      en: 'Availability date',
-      fr: 'Date de disponibilité',
-      he: 'תאריך זמינות',
-      ru: 'Дата доступности',
-    },
-    monthlyRent: {
-      en: 'Monthly rent',
-      fr: 'Loyer mensuel',
-      he: 'שכר דירה חודשי',
-      ru: 'Ежемесячная аренда',
-    },
-    rentalCharges: {
-      en: 'Rental charges',
-      fr: 'Charges locatives',
-      he: 'דמי השכירות',
-      ru: 'Ежемесячная аренда',
-    },
-    floor: {
-      en: 'Floor',
-      fr: 'Etage',
-      he: 'רצפה',
-      ru: 'пол',
+    propertyInfos: {
+      label: {
+        en: 'Property infos',
+        fr: 'Informations de l\'appartement'
+      },
+      nbRoom: {
+        en: 'Number of pieces',
+        fr: 'Nombre de pièces',
+        he: 'מספר החדרים',
+        ru: 'Количество номеров',
+      },
+      nbBedroom: {
+        en: 'Number of rooms',
+        fr: 'Nombre de chambres',
+        he: 'מספר החדרים',
+        ru: 'Количество номеров',
+      },
+      area: {
+        en: 'Area',
+        fr: 'Superficie',
+        he: 'אזור',
+        ru: 'область',
+      },
+      availableDate: {
+        en: 'Availability date',
+        fr: 'Date de disponibilité',
+        he: 'תאריך זמינות',
+        ru: 'Дата доступности',
+      },
+      monthlyRent: {
+        en: 'Monthly rent',
+        fr: 'Loyer mensuel',
+        he: 'שכר דירה חודשי',
+        ru: 'Ежемесячная аренда',
+      },
+      rentalCharges: {
+        en: 'Rental charges',
+        fr: 'Charges locatives',
+        he: 'דמי השכירות',
+        ru: 'Ежемесячная аренда',
+      },
+      floor: {
+        en: 'Floor',
+        fr: 'Etage',
+        he: 'רצפה',
+        ru: 'пол',
+      },
     },
     propertyOptions: {
       label: {
@@ -195,6 +219,18 @@ export default {
       american: {
         en: 'American',
         fr: 'Américaine'
+      },
+      equiped: {
+        en: 'Equiped',
+        fr: 'Equipé'
+      },
+      miniKitchen: {
+        en: 'Mini kitchen',
+        fr: 'Kitchenette'
+      },
+      other: {
+        en: 'Other',
+        fr: 'Autre'
       },
     }
   },

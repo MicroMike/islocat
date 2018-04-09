@@ -15,13 +15,16 @@ export const Input = (props) => {
   )
 }
 
-const RadioCheckbox = ({ type, choices, form, name, state }) => {
+const RadioCheckbox = ({ type, choices, form, name, state, noTrad }) => {
   const label = form + '.' + name + '.'
 
   return (
     <div className={'radio-checkbox ' + type} >
       <FormattedMessage id={label + 'label'} />
       {choices.map(choice => {
+        const isString = typeof choice === 'string'
+        choice = isString ? choice : choice.label
+
         const inputName = type === 'radio' ? name : choice
         const isChecked = type === 'radio' ? state[name] === choice : state[choice]
         const value = type === 'radio' ? choice : ''
@@ -32,7 +35,8 @@ const RadioCheckbox = ({ type, choices, form, name, state }) => {
             key={id}
             type={type}
             name={inputName}
-            label={label + choice}
+            label={!noTrad || !isString ? label + choice : null}
+            textLabel={noTrad && isString ? choice : null}
             id={id}
             isChecked={isChecked}
             value={value}

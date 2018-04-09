@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-// import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 // import { connect } from 'react-redux'
 
 // import { fetchPropertyData } from '../PropertyAction';
 // import * as Property from '../PropertyReducer';
+
+import './propertyForm.less'
 
 import { Radio, NumberRadio, Checkbox, Input } from '../../Form/Form'
 import { injectIntl } from 'react-intl';
@@ -16,12 +18,12 @@ const Property = {
     "villa",
     "penthouse",
   ],
-  // propertyInfo: [
-  //   "area",
-  //   "rentalCharges",
-  //   "monthlyRent",
-  //   "availableDate",
-  // ],
+  propertyInfos: [
+    "area",
+    "rentalCharges",
+    "monthlyRent",
+    "availableDate",
+  ],
   buildingOptions: [
     "intercom",
     "elevator",
@@ -29,6 +31,8 @@ const Property = {
     "elevatorShabbath",
     "guardian",
     "handicapAccess",
+    "carPark",
+    "cellar"
   ],
   propertyOptions: [
     "furnished",
@@ -39,8 +43,11 @@ const Property = {
   kitchen: [
     'separate',
     'american',
-    'equiped'
-  ]
+    'equiped',
+    'miniKitchen',
+    'other',
+  ],
+  energyClass: [{ label: 'pending' }, 'A', 'B', 'C', 'D', 'E', 'F', 'G'],
 }
 
 const Rooms = ({ state }) => {
@@ -50,8 +57,8 @@ const Rooms = ({ state }) => {
 
   return (
     <div id="rooms" >
-      <NumberRadio name="nbBedroom" label="ownerForm.nbBedroom" min={1} max={5} state={state} />
-      <NumberRadio name="nbRoom" label="ownerForm.nbRoom" min={1} max={5} state={state} />
+      <NumberRadio name="nbBedroom" label="ownerForm.propertyInfos.nbBedroom" min={1} max={5} state={state} />
+      <NumberRadio name="nbRoom" label="ownerForm.propertyInfos.nbRoom" min={1} max={5} state={state} />
     </div>
   )
 }
@@ -60,7 +67,10 @@ class PropertyForm extends Component {
   constructor(props) {
     super(props)
 
-    this.state = {}
+    this.state = {
+      step: 1,
+      form: {}
+    }
   }
 
   componentWillMount() {
@@ -70,59 +80,104 @@ class PropertyForm extends Component {
   }
 
   update(e) {
+    console.log(e.target)
     const update = {
+      ...this.state.form,
       [e.target.name]: e.target.type === 'checkbox' ? e.target.checked : e.target.value
     }
-    this.setState(update)
+    this.setState({ form: update })
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log(this.state)
+    console.log(this.state.form)
   }
 
   render() {
+    const stepPropertyType = <Radio form="ownerForm" name="propertyType" choices={Property.propertyType} state={this.state.form} />
+    const stepPropertyInfos = (
+      <div>
+        <Input type="date" name="availableDate" label="ownerForm.propertyInfos.availableDate" />
+        <Input type="number" name="area" label="ownerForm.propertyInfos.area" />
+        <Input type="number" name="monthlyRent" label="ownerForm.propertyInfos.monthlyRent" />
+        <Input type="number" name="rentalCharges" label="ownerForm.propertyInfos.rentalCharges" />
+      </div>
+    )
+    const stepEnergyClass = <Radio form="ownerForm" name="energyClass" choices={Property.energyClass} state={this.state.form} noTrad={true} />
+    const stepPropertyOptions = (
+      <div>
+        <Rooms state={this.state.form} />
+        <NumberRadio name="floor" label="ownerForm.propertyInfos.floor" max={10} state={this.state.form} />
+        <Checkbox form="ownerForm" name="propertyOptions" choices={Property.propertyOptions} state={this.state.form} />
+      </div>
+    )
+    const stepBuildingOptions = <Checkbox form="ownerForm" name="buildingOptions" choices={Property.buildingOptions} state={this.state.form} />
+    const stepKitchen = <Checkbox form="ownerForm" name="kitchen" choices={Property.kitchen} state={this.state.form} />
 
     return (
-      <form id="owner-form" onChange={(e) => this.update(e)} onSubmit={this.handleSubmit.bind(this)} >
+      <div>
+        <form id="owner-form" onChange={(e) => this.update(e)} onSubmit={this.handleSubmit.bind(this)} >
 
-        <Radio form="ownerForm" name="propertyType" choices={Property.propertyType} state={this.state} />
-        <hr />
-        <Input type="number" name="area" label="ownerForm.area" />
-        <Input type="number" name="monthlyRent" label="ownerForm.monthlyRent" />
-        <Input type="number" name="rentalCharges" label="ownerForm.rentalCharges" />
-        <Input type="date" name="availableDate" label="ownerForm.availableDate" />
-        <hr />
-        <Rooms state={this.state} />
-        <NumberRadio name="floor" label="ownerForm.floor" max={10} state={this.state} />
-        <Checkbox form="ownerForm" name="propertyOptions" choices={Property.propertyOptions} state={this.state} />
-        <hr />
-        <Checkbox form="ownerForm" name="buildingOptions" choices={Property.buildingOptions} state={this.state} />
-        <hr />
-        <Radio form="ownerForm" name="kitchen" choices={Property.kitchen} state={this.state} />
+          {
+            [1, 2, 3, 4, 5, 6].map(step => (
+              <button type="button" key={step} onClick={() => this.setState({ step: step })} >{step}</button>
+            ))
+          }
 
-        <hr />
-        {/* <Input type="text" name="street" label="ownerForm.property.street" /> */}
-
-        <input type="submit" name="submit" value={this.props.intl.messages['commons.submit']} />
-      </form>
+          {this.state.step === 1 ? stepPropertyType : null}
+          {this.state.step === 2 ? stepPropertyInfos : null}
+          {this.state.step === 3 ? stepEnergyClass : null}
+          {this.state.step === 4 ? stepPropertyOptions : null}
+          {this.state.step === 5 ? stepBuildingOptions : null}
+          {this.state.step === 6 ? stepKitchen : null}
+          {/* <Input type="text" name="street" label="ownerForm.property.street" /> */}
+          <hr />
+          {
+            this.state.step > 1 ? <button type="button" onClick={() => this.setState({ step: this.state.step - 1 })} >{this.props.intl.messages['commons.previous']}</button> : null
+          }
+          {
+            this.state.step < 6 ? <button type="button" onClick={() => this.setState({ step: this.state.step + 1 })} >{this.props.intl.messages['commons.next']}</button> : null
+          }
+          {
+            this.state.step === 6 ? <input type="submit" name="submit" value={this.props.intl.messages['commons.submit']} /> : null
+          }
+        </form>
+        <div>
+          {
+            Object.keys(Property).map(key => {
+              return (<p key={key} >
+                <FormattedMessage id={'ownerForm.' + key + '.label'} />
+                {this.state.form[key] ? <p>{this.state.form[key]}</p> : null}
+                {
+                  !this.state.form[key]
+                  ? Property[key].map(input => {
+                    // console.log(input)
+                    return <span key={input} >{this.state.form[input]}</span>
+                  })
+                  : null
+                }
+              </p>)
+            })
+          }
+        </div>
+      </div>
     )
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    strings: state.intl.strings.commons,
-    // propertyType: Property.getPropertyType(state),
-    // propertyInfo: Property.getPropertyInfo(state),
-    // propertyOptions: Property.getPropertyOptions(state),
-    // buildingOptions: Property.getBuildingOptions(state),
-  }
-}
-const mapDispatchToProps = (dispatch) => {
-  return {
-    // fetchPropertyData: fetchPropertyData(dispatch),
-  }
-}
+// const mapStateToProps = (state) => {
+//   return {
+//     strings: state.intl.strings.commons,
+//     // propertyType: Property.getPropertyType(state),
+//     // propertyInfo: Property.getPropertyInfo(state),
+//     // propertyOptions: Property.getPropertyOptions(state),
+//     // buildingOptions: Property.getBuildingOptions(state),
+//   }
+// }
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     // fetchPropertyData: fetchPropertyData(dispatch),
+//   }
+// }
 
 export default injectIntl(PropertyForm)

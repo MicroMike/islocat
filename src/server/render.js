@@ -11,6 +11,7 @@ import newStore from '../client/store'
 import App from '../client/App'
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
+console.log(assets)
 
 const renderFullPage = (markup, preloadedState) => {
   return `
