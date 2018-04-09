@@ -32,6 +32,16 @@ form .radio-checkbox label.active {
     color: #fff;
 }
 
+form .radio-checkbox.checkbox label.active::after {
+    content: ' \2714';
+    font-size: 13px;
+    float: right;
+}
+
+form .radio-checkbox.checkbox label {
+    width: 29%;
+}
+
 form input {
     margin: 0 10px;
 }
@@ -44,4 +54,8 @@ form input[type="checkbox"] {
 .rtl form label span,
 .rtl form .radio-checkbox label {
     float: right;
+}
+
+.rtl form .radio-checkbox.checkbox label.active::after {
+    float: left;
 }

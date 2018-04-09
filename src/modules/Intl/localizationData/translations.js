@@ -64,6 +64,14 @@ export default {
         he: 'סטודיו',
         ru: 'студия',
       },
+      villa: {
+        en: 'Villa',
+        fr: 'Villa',
+      },
+      penthouse: {
+        en: 'Penthouse',
+        fr: 'Penthouse',
+      },
     },
     nbRoom: {
       en: 'Number of pieces',
@@ -107,46 +115,22 @@ export default {
       he: 'רצפה',
       ru: 'пол',
     },
-    locationOptions: {
+    propertyOptions: {
       label: {
-        en: 'Options',
-        fr: 'Options',
+        en: 'Property options',
+        fr: 'Options du logement',
         he: 'אפשרויות',
         ru: 'опции',
       },
       furnished: {
         en: 'Furnished',
         fr: 'Meublé',
-        he: 'מרוהט',
-        ru: 'меблированный',
       },
       airConditioner: {
         en: 'Air conditioner',
         fr: 'Climatisation',
         he: 'מיזוג אוויר',
         ru: 'кондиционер',
-      },
-      guardian: {
-        en: 'Guardian',
-        fr: 'Gardien',
-        he: 'אפוטרופוס',
-        ru: 'опекун',
-      },
-      carPark: {
-        en: 'Car park',
-        fr: 'Parking',
-      },
-      cellar: {
-        en: 'Cellar',
-        fr: 'Cave',
-      },
-      elevator: {
-        en: 'Elevator',
-        fr: 'Ascenseur',
-      },
-      intercom: {
-        en: 'Intercom',
-        fr: 'Interphone',
       },
       groundFloor: {
         en: 'Ground floor',
@@ -157,6 +141,62 @@ export default {
         fr: 'Dernier étage',
       },
     },
+    buildingOptions: {
+      label: {
+        en: 'Building options',
+        fr: 'Options de l\'immeuble',
+        he: 'אפשרויות',
+        ru: 'опции',
+      },
+      intercom: {
+        en: 'Intercom',
+        fr: 'Interphone',
+      },
+      digicode: {
+        en: 'Digicode',
+        fr: 'Digicode',
+      },
+      guardian: {
+        en: 'Guardian',
+        fr: 'Gardien',
+        he: 'אפוטרופוס',
+        ru: 'опекун',
+      },
+      elevator: {
+        en: 'Elevator',
+        fr: 'Ascenseur',
+      },
+      elevatorShabbath: {
+        en: 'Elevator for shabbath',
+        fr: 'Ascenseur de chabbat',
+      },
+      handicapAccess: {
+        en: 'Handicap access',
+        fr: 'Accès handicapé'
+      },
+      cellar: {
+        en: 'Cellar',
+        fr: 'Cave',
+      },
+      carPark: {
+        en: 'Car park',
+        fr: 'Parking',
+      },
+    },
+    kitchen: {
+      label: {
+        en: 'Kitchen',
+        fr: 'Cuisine'
+      },
+      separate: {
+        en: 'Separate',
+        fr: 'Séparée'
+      },
+      american: {
+        en: 'American',
+        fr: 'Américaine'
+      },
+    }
   },
 };
 

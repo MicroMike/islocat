@@ -1,11 +1,47 @@
 import React, { Component } from 'react';
 // import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux'
+// import { connect } from 'react-redux'
 
-import { fetchPropertyType } from '../PropertyAction';
-import { getPropertyType } from '../PropertyReducer';
+// import { fetchPropertyData } from '../PropertyAction';
+// import * as Property from '../PropertyReducer';
 
 import { Radio, NumberRadio, Checkbox, Input } from '../../Form/Form'
+import { injectIntl } from 'react-intl';
+
+const Property = {
+  propertyType: [
+    "studio",
+    "home",
+    "apartment",
+    "villa",
+    "penthouse",
+  ],
+  // propertyInfo: [
+  //   "area",
+  //   "rentalCharges",
+  //   "monthlyRent",
+  //   "availableDate",
+  // ],
+  buildingOptions: [
+    "intercom",
+    "elevator",
+    "digicode",
+    "elevatorShabbath",
+    "guardian",
+    "handicapAccess",
+  ],
+  propertyOptions: [
+    "furnished",
+    "airConditioner",
+    "groundFloor",
+    "lastFloor",
+  ],
+  kitchen: [
+    'separate',
+    'american',
+    'equiped'
+  ]
+}
 
 const Rooms = ({ state }) => {
   if (state.propertyType === 'studio') {
@@ -13,11 +49,9 @@ const Rooms = ({ state }) => {
   }
 
   return (
-    <div>
-      <NumberRadio name="nbRoom" label="ownerForm.nbRoom" min={1} max={5} state={state} />
+    <div id="rooms" >
       <NumberRadio name="nbBedroom" label="ownerForm.nbBedroom" min={1} max={5} state={state} />
-      {/* <Input type="number" name="nbRoom" label="ownerForm.nbRoom" /> */}
-      {/* <Input type="number" name="nbBedroom" label="ownerForm.nbBedroom" /> */}
+      <NumberRadio name="nbRoom" label="ownerForm.nbRoom" min={1} max={5} state={state} />
     </div>
   )
 }
@@ -27,24 +61,12 @@ class PropertyForm extends Component {
     super(props)
 
     this.state = {}
-
-    this.locationOptions = [
-      'furnished',
-      'airConditioner',
-      'guardian',
-      'carPark',
-      'cellar',
-      'elevator',
-      'intercom',
-      'groundFloor',
-      'lastFloor',
-    ]
   }
 
   componentWillMount() {
-    if (!this.props.propertyType || this.props.propertyType.length === 0) {
-      this.props.fetchPropertyType()
-    }
+    // if (!this.props.propertyType || this.props.propertyType.length === 0) {
+    //   this.props.fetchPropertyData()
+    // }
   }
 
   update(e) {
@@ -64,20 +86,25 @@ class PropertyForm extends Component {
     return (
       <form id="owner-form" onChange={(e) => this.update(e)} onSubmit={this.handleSubmit.bind(this)} >
 
-        <Radio form="ownerForm" name="propertyType" choices={this.props.propertyType} state={this.state} />
+        <Radio form="ownerForm" name="propertyType" choices={Property.propertyType} state={this.state} />
         <hr />
-        <Rooms state={this.state} />
         <Input type="number" name="area" label="ownerForm.area" />
         <Input type="number" name="monthlyRent" label="ownerForm.monthlyRent" />
         <Input type="number" name="rentalCharges" label="ownerForm.rentalCharges" />
         <Input type="date" name="availableDate" label="ownerForm.availableDate" />
         <hr />
+        <Rooms state={this.state} />
         <NumberRadio name="floor" label="ownerForm.floor" max={10} state={this.state} />
-        <Checkbox form="ownerForm" name="locationOptions" choices={this.locationOptions} state={this.state} />
+        <Checkbox form="ownerForm" name="propertyOptions" choices={Property.propertyOptions} state={this.state} />
         <hr />
-        {/* <Input type="text" name="street" label="ownerForm.location.street" /> */}
+        <Checkbox form="ownerForm" name="buildingOptions" choices={Property.buildingOptions} state={this.state} />
+        <hr />
+        <Radio form="ownerForm" name="kitchen" choices={Property.kitchen} state={this.state} />
 
-        <input type="submit" name="submit" value={this.props.strings.submit} />
+        <hr />
+        {/* <Input type="text" name="street" label="ownerForm.property.street" /> */}
+
+        <input type="submit" name="submit" value={this.props.intl.messages['commons.submit']} />
       </form>
     )
   }
@@ -86,16 +113,16 @@ class PropertyForm extends Component {
 const mapStateToProps = (state) => {
   return {
     strings: state.intl.strings.commons,
-    propertyType: getPropertyType(state)
+    // propertyType: Property.getPropertyType(state),
+    // propertyInfo: Property.getPropertyInfo(state),
+    // propertyOptions: Property.getPropertyOptions(state),
+    // buildingOptions: Property.getBuildingOptions(state),
   }
 }
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchPropertyType: fetchPropertyType(dispatch),
+    // fetchPropertyData: fetchPropertyData(dispatch),
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PropertyForm)
+export default injectIntl(PropertyForm)

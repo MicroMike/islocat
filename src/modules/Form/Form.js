@@ -19,7 +19,7 @@ const RadioCheckbox = ({ type, choices, form, name, state }) => {
   const label = form + '.' + name + '.'
 
   return (
-    <div className="radio-checkbox" >
+    <div className={'radio-checkbox ' + type} >
       <FormattedMessage id={label + 'label'} />
       {choices.map(choice => {
         const inputName = type === 'radio' ? name : choice
@@ -52,7 +52,7 @@ export const NumberRadio = (props) => {
   }
 
   return (
-    <div className="radio-checkbox" >
+    <div className="radio-checkbox radio" >
       <FormattedMessage id={props.label} />
       {choices.map(choice => {
         const value = String(parseInt(choice, 10))

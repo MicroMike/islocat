@@ -1,18 +1,18 @@
 import callApi from '../../utils/callApi';
 
-export function storePropertyType(propertyType) {
+export function storePropertyData(property) {
   return {
-    type: 'PROPERTY_TYPE',
-    propertyType,
+    type: 'PROPERTY',
+    property,
   };
 }
 
-export function fetchPropertyType(dispatch) {
+export function fetchPropertyData(dispatch) {
   return () => {
-    const prefetch = callApi('property/getPropertyType')
+    const prefetch = callApi('property/getPropertyData')
 
     prefetch.then(res => {
-      dispatch(storePropertyType(res.propertyType))
+      dispatch(storePropertyData(res))
     });
 
     dispatch({
