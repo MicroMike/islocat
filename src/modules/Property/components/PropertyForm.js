@@ -128,7 +128,7 @@ class PropertyForm extends Component {
 
     const recap = Object.keys(Property).map(key => {
       return (<p key={key} >
-        <FormattedMessage id={'ownerForm.' + key + '.label'} />
+        <FormattedMessage id={'ownerForm.' + key + '.label'} /><br />
         {this.state.form[key] ? <span> {this.state.form[key]} </span> : null}
         {
           !this.state.form[key]
