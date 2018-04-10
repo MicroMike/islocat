@@ -1,4 +1,43 @@
 #owner-form {
+    #steps {
+        margin-left: 15px;
+        button {
+            border: none;
+            width: 30px;
+            text-align: center;
+            height: 30px;
+            border-radius: 30px;
+            position: relative;
+            margin: 0 13px;
+            &:before,
+            &:after {
+                content: '';
+                width: 15px;
+                height: 15px;
+                background: #dddddd;
+                position: absolute;
+            }
+            &:before {
+                left: -13px;
+            }
+            &:after {
+                left: 28px;
+            }
+            &.active {
+                color: #fff;
+                background: #000;
+                &:before {
+                    background: #000;
+                }
+                &:after {
+                    background: #000;
+                }
+            }
+            &:focus {
+                outline: none;
+            }
+        }
+    }
     label[for^="energyClass-"]:not(:first-of-type) {
         &.active {
             color: #006fb8;

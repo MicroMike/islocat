@@ -91,6 +91,24 @@ export default {
         fr: 'En cours'
       }
     },
+    heating: {
+      label: {
+        en: 'Heating',
+        fr: 'Chauffage',
+      },
+      collective: {
+        en: 'Collective',
+        fr: 'Collectif'
+      },
+      individualElectric: {
+        en: 'Individual Electric',
+        fr: 'Individuel Electrique'
+      },
+      individualGas: {
+        en: 'Individual gas',
+        fr: 'Individuel au gaz'
+      },
+    },
     propertyInfos: {
       label: {
         en: 'Property infos',
@@ -164,6 +182,14 @@ export default {
         en: 'Last floor',
         fr: 'Dernier étage',
       },
+      terrace: {
+        en: 'Terrace',
+        fr: 'Terrasse'
+      },
+      balcony: {
+        en: 'Balcony',
+        fr: 'Balcon'
+      },
     },
     buildingOptions: {
       label: {
@@ -232,6 +258,30 @@ export default {
         en: 'Other',
         fr: 'Autre'
       },
+    },
+    bathroom: {
+      label: {
+        en: 'Bathroom',
+        fr: 'Salle de bain'
+      },
+      seperateWC: {
+        en: 'Separate WC',
+        fr: 'WC séparés'
+      },
+      shower: {
+        en: 'Shower',
+        fr: 'Douche'
+      },
+      bath: {
+        en: 'Bath',
+        fr: 'Baignoire'
+      }
+    },
+    environment: {
+      label: {
+        en: 'Environment',
+        fr: 'Environnement'
+      }
     }
   },
 };
