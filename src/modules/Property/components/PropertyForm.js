@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
+import FormattedMessage from '../../Intl/IntlFormat';
 // import { connect } from 'react-redux'
 
 // import { fetchPropertyData } from '../PropertyAction';
@@ -23,6 +23,8 @@ const Property = {
     "rentalCharges",
     "monthlyRent",
     "availableDate",
+    "nbBedroom",
+    "nbRoom"
   ],
   buildingOptions: [
     "intercom",
@@ -67,8 +69,8 @@ const Rooms = ({ state }) => {
 
   return (
     <div id="rooms" >
-      <NumberRadio name="nbBedroom" label="ownerForm.propertyInfos.nbBedroom" min={1} max={5} state={state} />
-      <NumberRadio name="nbRoom" label="ownerForm.propertyInfos.nbRoom" min={1} max={5} state={state} />
+      <NumberRadio name="nbBedroom" min={1} max={5} state={state} />
+      <NumberRadio name="nbRoom" min={1} max={5} state={state} />
     </div>
   )
 }
@@ -90,7 +92,6 @@ class PropertyForm extends Component {
   }
 
   update(e) {
-    console.log(e.target)
     const update = {
       ...this.state.form,
       [e.target.name]: e.target.type === 'checkbox' ? e.target.checked : e.target.value
@@ -104,40 +105,58 @@ class PropertyForm extends Component {
   }
 
   render() {
-    const stepPropertyType = <Radio form="ownerForm" name="propertyType" choices={Property.propertyType} state={this.state.form} />
+    const stepPropertyType = <Radio name="propertyType" choices={Property.propertyType} state={this.state.form} />
     const stepPropertyInfos = (
       <div>
-        <Input type="date" name="availableDate" label="ownerForm.propertyInfos.availableDate" />
-        <Input type="number" name="area" label="ownerForm.propertyInfos.area" />
-        <Input type="number" name="monthlyRent" label="ownerForm.propertyInfos.monthlyRent" />
-        <Input type="number" name="rentalCharges" label="ownerForm.propertyInfos.rentalCharges" />
+        <Input type="date" name="availableDate" />
+        <Input type="number" name="area" />
+        <Input type="number" name="monthlyRent" />
+        <Input type="number" name="rentalCharges" />
       </div>
     )
     const stepPropertyOptions = (
       <div>
         <Rooms state={this.state.form} />
-        <NumberRadio name="floor" label="ownerForm.propertyInfos.floor" max={10} state={this.state.form} />
-        <Checkbox form="ownerForm" name="propertyOptions" choices={Property.propertyOptions} state={this.state.form} />
-        <Radio form="ownerForm" name="heating" choices={Property.heating} state={this.state.form} />
-        <Radio form="ownerForm" name="energyClass" choices={Property.energyClass} state={this.state.form} noTrad={true} />
+        <NumberRadio name="floor" max={10} state={this.state.form} />
+        <Checkbox name="propertyOptions" choices={Property.propertyOptions} state={this.state.form} />
+        <Radio name="heating" choices={Property.heating} state={this.state.form} />
+        <Radio name="energyClass" choices={Property.energyClass} state={this.state.form} noTrad={true} />
       </div>
     )
-    const stepBuildingOptions = <Checkbox form="ownerForm" name="buildingOptions" choices={Property.buildingOptions} state={this.state.form} />
-    const stepKitchen = <Checkbox form="ownerForm" name="kitchen" choices={Property.kitchen} state={this.state.form} />
-    const stepBathroom = <Checkbox form="ownerForm" name="bathroom" choices={Property.bathroom} state={this.state.form} />
+    const stepBuildingOptions = <Checkbox name="buildingOptions" choices={Property.buildingOptions} state={this.state.form} />
+    const stepKitchen = <Checkbox name="kitchen" choices={Property.kitchen} state={this.state.form} />
+    const stepBathroom = <Checkbox name="bathroom" choices={Property.bathroom} state={this.state.form} />
 
     const recap = Object.keys(Property).map(key => {
-      return (<p key={key} >
-        <FormattedMessage id={'ownerForm.' + key + '.label'} /><br />
-        {this.state.form[key] ? <span> {this.state.form[key]} </span> : null}
+      const isString = typeof this.state.form[key] === 'string'
+      return (<div key={key} >
+        <h2><FormattedMessage id={key} /><br /></h2>
         {
-          !this.state.form[key]
+          !isString
             ? Property[key].map(input => {
-              return <span key={input} > {this.state.form[input]} </span>
+              const value = this.state.form[input]
+              const isValueString = typeof value === 'string'
+
+              return (
+                <p key={input}>
+                  {
+                    isValueString
+                      ? <span>
+                        <FormattedMessage id={input} /> :
+                        {' '}
+                        {this.state.form[input]}
+                      </span>
+                      : value
+                        ? <FormattedMessage id={input} />
+                        : null
+                  }
+                </p>
+              )
+              // return isString ? <p><FormattedMessage id={input} />: </p>
             })
-            : null
+            : <h3><FormattedMessage id={this.state.form[key]} /></h3>
         }
-      </p>)
+      </div>)
     })
 
     return (
@@ -157,16 +176,18 @@ class PropertyForm extends Component {
           {this.state.step === 4 ? stepBuildingOptions : null}
           {this.state.step === 5 ? stepKitchen : null}
           {this.state.step === 6 ? stepBathroom : null}
-          {/* <Input type="text" name="street" label="ownerForm.property.street" /> */}
+          {/* <Input type="text" name="street" /> */}
+          <br />
           <hr />
+          <br />
           {
-            this.state.step > 1 ? <button type="button" onClick={() => this.setState({ step: this.state.step - 1 })} >{this.props.intl.messages['commons.previous']}</button> : null
+            this.state.step > 1 ? <button type="button" onClick={() => this.setState({ step: this.state.step - 1 })} >{this.props.intl.messages.previous}</button> : null
           }
           {
-            this.state.step < 7 ? <button type="button" onClick={() => this.setState({ step: this.state.step + 1 })} >{this.props.intl.messages['commons.next']}</button> : null
+            this.state.step < 7 ? <button type="button" onClick={() => this.setState({ step: this.state.step + 1 })} >{this.props.intl.messages.next}</button> : null
           }
           {
-            this.state.step === 7 ? <input type="submit" name="submit" value={this.props.intl.messages['commons.submit']} /> : null
+            this.state.step === 7 ? <input type="submit" name="submit" value={this.props.intl.messages.submit} /> : null
           }
         </form>
         <div>

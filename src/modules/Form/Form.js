@@ -1,26 +1,27 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import FormattedMessage from '../Intl/IntlFormat';
 
 import './Form.less'
 
 export const Input = (props) => {
-  const { label, textLabel, isChecked, ...input } = props
+  const { label, isChecked, ...input } = props
   const checked = isChecked ? 'active' : ''
+  const formattedMessage = label
+    ? label
+    : props.name
 
   return (
     <label htmlFor={props.id} className={checked} >
-      {textLabel ? textLabel : <FormattedMessage id={label} />}
-      <input {...input} />
+      {<FormattedMessage id={formattedMessage} />}
+      < input {...input} />
     </label>
   )
 }
 
 const RadioCheckbox = ({ type, choices, form, name, state, noTrad }) => {
-  const label = form + '.' + name + '.'
-
   return (
     <div className={'radio-checkbox ' + type} >
-      <FormattedMessage id={label + 'label'} />
+      <FormattedMessage id={name} />
       {choices.map(choice => {
         const isString = typeof choice === 'string'
         choice = isString ? choice : choice.label
@@ -35,8 +36,7 @@ const RadioCheckbox = ({ type, choices, form, name, state, noTrad }) => {
             key={id}
             type={type}
             name={inputName}
-            label={!noTrad || !isString ? label + choice : null}
-            textLabel={noTrad && isString ? choice : null}
+            label={choice}
             id={id}
             isChecked={isChecked}
             value={value}
@@ -57,7 +57,7 @@ export const NumberRadio = (props) => {
 
   return (
     <div className="radio-checkbox radio" >
-      <FormattedMessage id={props.label} />
+      <FormattedMessage id={props.name} />
       {choices.map(choice => {
         const value = String(parseInt(choice, 10))
         const id = props.name + '-' + choice
@@ -68,7 +68,7 @@ export const NumberRadio = (props) => {
             key={id}
             id={id}
             name={props.name}
-            textLabel={choice}
+            label={choice}
             value={value}
             isChecked={props.state[props.name] === value}
           />
@@ -89,7 +89,7 @@ export const Checkbox = (props) => (
 export const Select = (props) => {
   return (
     <div className="select" >
-      <FormattedMessage id={props.form + '.' + props.name} />
+      <FormattedMessage id={props.name} />
       <select name={props.name} >
         {props.options}
       </select>
