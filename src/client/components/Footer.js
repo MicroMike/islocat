@@ -2,7 +2,7 @@ import React from 'react';
 // import { FormattedMessage } from 'react-intl';
 
 // Import Style
-import './assets/Footer.css';
+import './assets/Footer.less';
 
 export function Footer() {
   return (

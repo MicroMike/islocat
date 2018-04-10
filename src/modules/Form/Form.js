@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import './Form.css'
+import './Form.less'
 
 export const Input = (props) => {
   const { label, textLabel, isChecked, ...input } = props
