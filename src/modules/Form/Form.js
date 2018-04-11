@@ -13,7 +13,7 @@ export const Input = (props) => {
   return (
     <label htmlFor={props.id} className={checked} >
       {<FormattedMessage id={formattedMessage} />}
-      < input {...input} />
+      <input {...input} />
     </label>
   )
 }
