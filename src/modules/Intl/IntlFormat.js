@@ -1,13 +1,17 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { injectIntl } from 'react-intl'
+import { connect } from 'react-redux'
 
 const FormatString = (props) => {
-  const matchTranslate = typeof props.intl.messages[props.id] === 'string'
+  const matchTranslate = typeof props.messages[props.id] === 'string'
   if (props.text && matchTranslate) {
-    return props.intl.messages[props.id]
+    return props.messages[props.id]
   }
   return matchTranslate ? <FormattedMessage {...props} /> : <span>{props.id}</span>
 }
 
-export default injectIntl(FormatString)
+const mapStateToProps = (state) => ({
+  messages: state.intl.messages
+})
+
+export default connect(mapStateToProps)(FormatString)

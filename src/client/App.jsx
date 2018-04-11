@@ -3,7 +3,7 @@ import Route from 'react-router-dom/Route';
 import Switch from 'react-router-dom/Switch';
 import { injectIntl } from 'react-intl'
 
-import './App.less';
+import './app.less';
 
 import Header from './components/Header'
 import Footer from './components/Footer'

@@ -9,6 +9,10 @@ import IntlWrapper from './modules/Intl/IntlWrapper';
 
 const store = newStore(window.__INITIAL_STATE__)
 
+store.subscribe(() => {
+  console.log(store.getState())
+})
+
 hydrate(
   <Provider store={store} >
     <IntlWrapper>

@@ -84,23 +84,23 @@ let languages = [];
 for (const language of enabledLanguages) {
   languages[language] = {
     locale: language,
-    strings: getLangue(LanguageData, null, language)
+    messages: getLangue(LanguageData, null, language)
   }
 }
 
 // bring in intl polyfill, react-intl, and app-specific language data
 addLocaleData(en);
 localizationData.en = languages['en'];
-localizationData.en.messages = flattenMessages(localizationData.en.strings);
+localizationData.en.messages = flattenMessages(localizationData.en.messages);
 
 addLocaleData(fr);
 localizationData.fr = languages['fr'];
-localizationData.fr.messages = flattenMessages(localizationData.fr.strings);
+localizationData.fr.messages = flattenMessages(localizationData.fr.messages);
 
 addLocaleData(he);
 localizationData.he = languages['he'];
-localizationData.he.messages = flattenMessages(localizationData.he.strings);
+localizationData.he.messages = flattenMessages(localizationData.he.messages);
 
 addLocaleData(ru);
 localizationData.ru = languages['ru'];
-localizationData.ru.messages = flattenMessages(localizationData.ru.strings);
+localizationData.ru.messages = flattenMessages(localizationData.ru.messages);

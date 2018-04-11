@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 
 // Import Style
-import './assets/Header.less';
+import './assets/header.less';
 
 import { switchLanguage } from '../../modules/Intl/IntlActions'
 
