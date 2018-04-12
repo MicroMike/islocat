@@ -1,24 +1,13 @@
-import AppRoot from './App';
-import Home from '../modules/Home/Home';
-import Owner from '../modules/Property/pages/OwnerPage';
+import React from 'react';
+import Route from 'react-router-dom/Route';
+import Switch from 'react-router-dom/Switch';
 
-const routes = [{
-  component: AppRoot,
-  routes: [
-    {
-      path: '/',
-      exact: true,
-      component: Home
-    },
-    {
-      path: '/home',
-      component: Home
-    },
-    {
-      path: '/owner',
-      component: Owner
-    }
-  ]
-}];
+import Home from '../modules/Home/Home'
+import Owner from '../modules/Property/pages/OwnerPage'
 
-export default routes;
+export default () => (
+  <Switch>
+    <Route exact path="/" component={Home} />
+    <Route exact path="/owner" component={Owner} />
+  </Switch>
+)

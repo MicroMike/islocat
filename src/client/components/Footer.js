@@ -1,8 +1,8 @@
 import React from 'react';
-// import { FormattedMessage } from 'react-intl';
+// import FormattedMessage from '../../modules/Intl/IntlFormat';
 
 // Import Style
-import './assets/Footer.less';
+import './assets/footer.less';
 
 export function Footer() {
   return (

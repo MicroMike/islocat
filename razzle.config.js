@@ -1,4 +1,5 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const path = require('path');
 
 const extractLess = new ExtractTextPlugin({
   filename: 'static/css/[name].[contenthash].css',
@@ -34,6 +35,16 @@ module.exports = {
         ...config.plugins,
         extractLess // <- Add the ExtractTextPlugin instance here
       ],
+      resolve: {
+        ...config.resolve,
+        modules: [
+          path.resolve('./'),
+          'node_modules'
+        ],
+        alias: {
+          IntlFormat: 'src/modules/Intl/IntlFormat'
+        }
+      }
     }
   },
 }

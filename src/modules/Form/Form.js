@@ -1,11 +1,11 @@
 import React from 'react';
 import FormattedMessage from '../Intl/IntlFormat';
 
-import './Form.less'
+import './form.less'
 
 export const Input = (props) => {
   const { label, isChecked, ...input } = props
-  const checked = isChecked ? 'active' : ''
+  const checked = isChecked ? 'checked' : ''
   const formattedMessage = label
     ? label
     : props.name
@@ -13,7 +13,7 @@ export const Input = (props) => {
   return (
     <label htmlFor={props.id} className={checked} >
       {<FormattedMessage id={formattedMessage} />}
-      <input {...input} />
+      <input {...input} checked={checked} onChange={() => { }} />
     </label>
   )
 }

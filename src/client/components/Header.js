@@ -1,16 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import FormattedMessage from '../../modules/Intl/IntlFormat';
 import { Link } from 'react-router-dom';
 
 // Import Style
-import './assets/Header.less';
+import './assets/header.less';
 
 import { switchLanguage } from '../../modules/Intl/IntlActions'
 
-export function Header(props, context) {
-  const languageNodes = props.intl.enabledLanguages.map(
-    lang => <li key={lang} onClick={() => props.switchLanguage(lang)} className={lang === props.intl.locale ? 'selected' : ''}>{lang}</li>
+export function Header({ intl, switchLanguage }) {
+  const languageNodes = intl.enabledLanguages.map(
+    lang => <li key={lang} onClick={() => switchLanguage(lang)} className={lang === intl.locale ? 'selected' : ''}>{lang}</li>
   );
 
   return (
@@ -35,11 +35,6 @@ export function Header(props, context) {
             <Link to="/resident"><FormattedMessage id="resident" /></Link>
           </h2>
         </div>
-        {/*
-          context.router.isActive('/', true)
-            // ? <a className={styles['add-post-button']} href="#" onClick={props.toggleAddPost}><FormattedMessage id="addPost" /></a>
-            : null
-        */}
       </div>
     </header>
   );

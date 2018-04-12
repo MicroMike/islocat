@@ -21,3 +21,10 @@ export function fetchPropertyData(dispatch) {
     })
   }
 }
+
+export const storePropertyForm = (form) => {
+  return {
+    type: 'OWNER_FORM',
+    ...form
+  };
+}
