@@ -9,7 +9,7 @@ const Recapitulatif = ({ form, property }) => (
     {
       Object.keys(property).map(key => {
         const isString = typeof form[key] === 'string'
-        const title = <FormattedMessage id={key} />
+        const title = <p><FormattedMessage id={key} /></p>
 
         const values = []
 
@@ -22,7 +22,7 @@ const Recapitulatif = ({ form, property }) => (
             const isValueString = typeof value === 'string'
 
             values.push(
-              <p key={input}>
+              <span key={input} className="tag" >
                 {
                   value
                     ? <FormattedMessage id={input} />
@@ -30,10 +30,10 @@ const Recapitulatif = ({ form, property }) => (
                 }
                 {
                   isValueString
-                    ? <span>{' : ' + form[input]}</span>
+                    ? <span>{' ' + form[input]}</span>
                     : null
                 }
-              </p>
+              </span>
             )
 
             return false
@@ -42,7 +42,6 @@ const Recapitulatif = ({ form, property }) => (
 
         return (<div key={key} >
           {values.length !== 0 ? title : null}
-          <br />
           {values}
         </div>)
       })
@@ -50,9 +49,9 @@ const Recapitulatif = ({ form, property }) => (
   </div>
 )
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (store) => {
   return {
-    form: state.property
+    form: store.property
   }
 }
 

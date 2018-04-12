@@ -4,7 +4,6 @@ import { Provider } from 'react-redux'
 import { renderToString } from 'react-dom/server'
 import { StaticRouter } from 'react-router-dom'
 
-import IntlWrapper from '../modules/Intl/IntlWrapper'
 import { switchLanguage } from '../modules/Intl/IntlActions'
 // import routes from '../client/routes'
 import newStore from '../client/store'
@@ -42,11 +41,9 @@ export const handleRender = (req, res) => {
 
   const app = (
     <Provider store={store} >
-      <IntlWrapper>
-        <StaticRouter location={req.url} context={{}}>
-          <App />
-        </StaticRouter>
-      </IntlWrapper>
+      <StaticRouter location={req.url} context={{}}>
+        <App />
+      </StaticRouter>
     </Provider>
   )
   renderToString(app)

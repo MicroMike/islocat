@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import FormattedMessage from '../../Intl/IntlFormat';
+import FormattedMessage from 'IntlFormat';
 import { connect } from 'react-redux'
 
 import { storePropertyForm } from '../PropertyAction';
@@ -14,10 +14,10 @@ const formRequired = {
     'propertyType'
   ],
   step2: [
-    'area',
-    'rentalCharges',
-    'monthlyRent',
-    'availableDate'
+    // 'area',
+    // 'rentalCharges',
+    // 'monthlyRent',
+    // 'availableDate'
   ],
   step3: [
     'nbBedroom',
@@ -30,18 +30,15 @@ const formRequired = {
   ],
 }
 
-
 const Rooms = ({ state }) => {
-  if (state.propertyType === 'studio') {
-    return null
-  }
-
-  return (
-    <div id="rooms" >
-      <NumberRadio name="nbBedroom" min={1} max={5} state={state} />
-      <NumberRadio name="nbRoom" min={1} max={5} state={state} />
-    </div>
-  )
+  return state.propertyType === 'studio'
+    ? null
+    : (
+      <div id="rooms" >
+        <NumberRadio name="nbBedroom" min={1} max={5} state={state} />
+        <NumberRadio name="nbRoom" min={1} max={5} state={state} />
+      </div>
+    )
 }
 
 class PropertyForm extends Component {
@@ -99,10 +96,33 @@ class PropertyForm extends Component {
     ]
   }
 
+  constraint(e) {
+    const form = {}
+
+    if (e.target.name === 'groundFloor' && e.target.checked) {
+      form.floor = '0'
+    }
+
+    if (e.target.name === 'floor') {
+      form.groundFloor = parseInt(e.target.value, 10) < 1
+    }
+
+    if (e.target.name === 'propertyType') {
+      form.nbRoom = e.target.value === 'studio' ? '1' : ''
+      form.nbBedroom = e.target.value === 'studio' ? '1' : ''
+    }
+
+    return form
+  }
+
   update(e) {
     const form = {
-      [e.target.name]: e.target.type === 'checkbox' ? e.target.checked : e.target.value
+      [e.target.name]: e.target.type === 'checkbox'
+        ? e.target.checked
+        : e.target.value,
+      ...this.constraint(e)
     }
+
     this.props.storePropertyForm(form)
   }
 
@@ -115,7 +135,7 @@ class PropertyForm extends Component {
     const requiredFields = formRequired['step' + step]
 
     const valid = requiredFields && requiredFields.filter(field => {
-      return !(typeof this.props.form[field] === 'string' && this.props.form[field])
+      return !(this.props.form[field])
     })
 
     return !valid || valid.length === 0
@@ -150,7 +170,6 @@ class PropertyForm extends Component {
   }
 
   render() {
-    console.log('render')
     this.initSteps()
 
     let steps = []
@@ -175,21 +194,21 @@ class PropertyForm extends Component {
         <hr />
         <br />
         {
-          this.state.step > 1 ? <button type="button" onClick={() => this.setState({ step: this.state.step - 1 })} ><FormattedMessage id='previous' text /></button> : null
+          this.state.step > 1 ? <button type="button" onClick={() => this.setState({ step: this.state.step - 1 })} ><FormattedMessage id='previous' /></button> : null
         }
         {
-          this.state.step < steps.length + 1 ? <button type="button" onClick={this.next.bind(this)} ><FormattedMessage id='next' text /></button> : null
+          this.state.step < steps.length + 1 ? <button type="button" onClick={this.next.bind(this)} ><FormattedMessage id='next' /></button> : null
         }
         {
-          this.state.step === steps.length + 1 ? <button type="submit" ><FormattedMessage id='submit' text /></button> : null
+          this.state.step === steps.length + 1 ? <button type="submit" ><FormattedMessage id='submit' /></button> : null
         }
       </form>
     )
   }
 }
 
-const mapStateToProps = (state) => ({
-  form: state.property
+const mapStateToProps = (store) => ({
+  form: store.property
 })
 
 export default connect(

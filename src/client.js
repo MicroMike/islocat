@@ -5,7 +5,6 @@ import { Provider } from 'react-redux';
 import { hydrate } from 'react-dom';
 
 import newStore from './client/store';
-import IntlWrapper from './modules/Intl/IntlWrapper';
 
 const store = newStore(window.__INITIAL_STATE__)
 
@@ -15,11 +14,9 @@ store.subscribe(() => {
 
 hydrate(
   <Provider store={store} >
-    <IntlWrapper>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </IntlWrapper>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>,
   document.getElementById('root')
 );
