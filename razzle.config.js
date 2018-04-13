@@ -42,7 +42,9 @@ module.exports = {
           'node_modules'
         ],
         alias: {
-          IntlFormat: 'modules/Intl/IntlFormat'
+          IntlFormat: 'modules/Intl/IntlFormat',
+          assets: 'modules/assets/',
+          clientAssets: 'client/assets/'
         }
       }
     }

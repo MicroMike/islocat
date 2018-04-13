@@ -1,7 +1,7 @@
 import React from 'react';
 import FormattedMessage from 'IntlFormat';
 
-import './form.less'
+import 'assets/form.less'
 
 export const Input = (props) => {
   const { label, isChecked, ...input } = props

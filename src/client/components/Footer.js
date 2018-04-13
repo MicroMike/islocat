@@ -2,7 +2,7 @@ import React from 'react';
 // import FormattedMessage from 'IntlFormat';
 
 // Import Style
-import './assets/footer.less';
+import 'clientAssets/footer.less';
 
 export function Footer() {
   return (
