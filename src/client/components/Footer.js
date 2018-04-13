@@ -1,5 +1,5 @@
 import React from 'react';
-// import FormattedMessage from '../../modules/Intl/IntlFormat';
+// import FormattedMessage from 'IntlFormat';
 
 // Import Style
 import './assets/footer.less';

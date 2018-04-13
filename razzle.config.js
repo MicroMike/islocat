@@ -38,11 +38,11 @@ module.exports = {
       resolve: {
         ...config.resolve,
         modules: [
-          path.resolve('./'),
+          path.resolve('src'),
           'node_modules'
         ],
         alias: {
-          IntlFormat: 'src/modules/Intl/IntlFormat'
+          IntlFormat: 'modules/Intl/IntlFormat'
         }
       }
     }

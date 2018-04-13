@@ -1,5 +1,5 @@
 import React from 'react';
-import FormattedMessage from '../Intl/IntlFormat';
+import FormattedMessage from 'IntlFormat';
 
 import './form.less'
 

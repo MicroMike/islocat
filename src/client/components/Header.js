@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import FormattedMessage from '../../modules/Intl/IntlFormat';
+import FormattedMessage from 'IntlFormat';
 import { Link } from 'react-router-dom';
 
 // Import Style

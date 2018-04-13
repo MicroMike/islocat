@@ -1,5 +1,5 @@
 import React from 'react';
-import FormattedMessage from '../../Intl/IntlFormat';
+import FormattedMessage from 'IntlFormat';
 import { connect } from 'react-redux'
 
 import './assets/recapitulatif.less'
