@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { storePropertyForm } from '../PropertyAction';
 // import * as Property from '../PropertyReducer';
 
-import 'assets/propertyForm.less'
+import 'modules/Property/assets/propertyForm.less'
 
 import { Radio, NumberRadio, Checkbox, Input } from '../../Form/Form'
 

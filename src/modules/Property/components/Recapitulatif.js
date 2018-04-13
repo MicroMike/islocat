@@ -2,7 +2,7 @@ import React from 'react';
 import FormattedMessage from 'IntlFormat';
 import { connect } from 'react-redux'
 
-import 'assets/recapitulatif.less'
+import 'modules/Property/assets/recapitulatif.less'
 
 const Recapitulatif = ({ form, property }) => (
   <div id="recapitulatif">

@@ -43,8 +43,6 @@ module.exports = {
         ],
         alias: {
           IntlFormat: 'modules/Intl/IntlFormat',
-          assets: 'modules/assets/',
-          clientAssets: 'client/assets/'
         }
       }
     }

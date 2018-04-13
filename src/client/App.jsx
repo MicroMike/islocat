@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
-import 'clientAssets/app.less';
+import 'client/app.less';
 
 import Header from './components/Header'
 import Footer from './components/Footer'

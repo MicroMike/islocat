@@ -4,7 +4,7 @@ import FormattedMessage from 'IntlFormat';
 import { Link } from 'react-router-dom';
 
 // Import Style
-import 'clientAssets/header.less';
+import 'client/components/assets/header.less';
 
 import { switchLanguage } from '../../modules/Intl/IntlActions'
 
@@ -15,8 +15,6 @@ export function Header({ intl, switchLanguage }) {
 
   return (
     <header>
-      {/* <Link to="/about">About -></Link>
-      <Link to="/form">Form -></Link> */}
       <div className='language-switcher'>
         <ul>
           <li><FormattedMessage id="switchLanguage" /></li>
