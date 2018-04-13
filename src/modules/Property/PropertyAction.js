@@ -28,3 +28,10 @@ export const storePropertyForm = (form) => {
     ...form
   };
 }
+
+export const storePropertyFormErrors = (errors) => {
+  return {
+    type: 'FORM_ERRORS',
+    errors: errors
+  };
+}

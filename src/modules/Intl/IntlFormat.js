@@ -1,13 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux'
 
-const FormatString = ({ id, messages, text }) => {
+const FormatString = (props) => {
+  const { dispatch, id, messages, text, ...attr } = props
   const matchTranslate = messages[id]
 
   return matchTranslate
     ? text
       ? matchTranslate
-      : <span>{matchTranslate}</span>
+      : <span {...attr}>{matchTranslate}</span>
     : id
 }
 

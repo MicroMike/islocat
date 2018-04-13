@@ -56,6 +56,16 @@ const Property = {
     'other'
   ],
   energyClass: [{ label: 'pending' }, 'A', 'B', 'C', 'D', 'E', 'F', 'G'],
+  nearbyServices: [
+    'school',
+    'shops',
+    'transport',
+  ],
+  location: [
+    'address',
+    'city',
+    'zipcode',
+  ]
 }
 
 export class OwnerPage extends Component {

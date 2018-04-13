@@ -1,13 +1,22 @@
 // Initial State
-// const initialState = {};
+const initialState = {
+  form: {},
+  errors: []
+};
 
-const PropertyReducer = (state = {}, action) => {
+const PropertyReducer = (state = initialState, action) => {
   const { type, ...values } = action
+
   switch (type) {
     case 'OWNER_FORM':
       return {
         ...state,
-        ...values
+        form: values
+      }
+    case 'FORM_ERRORS':
+      return {
+        ...state,
+        errors: action.errors
       }
     default:
       return state;

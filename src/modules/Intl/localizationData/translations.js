@@ -266,10 +266,38 @@ export default {
     en: 'Bath',
     fr: 'Baignoire'
   },
-  environment: {
-    en: 'Environment',
-    fr: 'Environnement'
-  }
+  nearbyServices: {
+    en: 'Nearby services',
+    fr: 'Services à proximité'
+  },
+  school: {
+    en: 'School',
+    fr: 'Ecole  '
+  },
+  shops: {
+    en: 'Shops',
+    fr: 'Comerces'
+  },
+  transport: {
+    en: 'Transports',
+    fr: 'Transports'
+  },
+  location: {
+    en: 'The location',
+    fr: 'La localisation'
+  },
+  address: {
+    en: 'Address',
+    fr: 'Adresse'
+  },
+  city: {
+    en: 'City',
+    fr: 'Ville'
+  },
+  zipcode: {
+    en: 'Zipcode',
+    fr: 'Code postal'
+  },
   // >>>>>>>>>>>>>
   // >>>>>>>>>>>>>
 };

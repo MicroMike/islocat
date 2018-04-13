@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import FormattedMessage from 'IntlFormat';
 import { connect } from 'react-redux'
 
-import { storePropertyForm } from '../PropertyAction';
+import { storePropertyForm, storePropertyFormErrors } from '../PropertyAction';
 // import * as Property from '../PropertyReducer';
 
 import 'modules/Property/assets/propertyForm.less'
@@ -10,33 +10,38 @@ import 'modules/Property/assets/propertyForm.less'
 import { Radio, NumberRadio, Checkbox, Input } from '../../Form/Form'
 
 const formRequired = {
-  step1: [
+  1: [
     'propertyType'
   ],
-  step2: [
-    // 'area',
+  2: [
+    'area',
     // 'rentalCharges',
     // 'monthlyRent',
     // 'availableDate'
   ],
-  step3: [
+  3: [
     'nbBedroom',
     'nbRoom',
     'floor'
   ],
-  step4: [
+  4: [
     'heating',
     'energyClass'
   ],
+  9: [
+    'address',
+    'city',
+    'zipcode'
+  ],
 }
 
-const Rooms = ({ state }) => {
-  return state.propertyType === 'studio'
+const Rooms = (props) => {
+  return props.form.propertyType === 'studio'
     ? null
     : (
       <div id="rooms" >
-        <NumberRadio name="nbBedroom" min={1} max={5} state={state} />
-        <NumberRadio name="nbRoom" min={1} max={5} state={state} />
+        <NumberRadio name="nbBedroom" min={1} max={5} {...props} />
+        <NumberRadio name="nbRoom" min={1} max={5} {...props} />
       </div>
     )
 }
@@ -47,7 +52,7 @@ class PropertyForm extends Component {
 
     this.state = {
       step: 1,
-      form: {}
+      errors: []
     }
 
     this.form = this.props.form
@@ -55,35 +60,53 @@ class PropertyForm extends Component {
   }
 
   initSteps() {
-    const stepPropertyType = <Radio name="propertyType" choices={this.props.property.propertyType} state={this.props.form} />
+    const form = this.props.form
+    const errors = this.props.errors
+    const property = this.props.property
+
+    const radioCheckboxProps = {
+      form: form,
+      errors: errors
+    }
+
+    const stepPropertyType = <Radio name="propertyType" choices={property.propertyType} {...radioCheckboxProps} />
 
     const stepPropertyInfos = (
       <div>
-        <Input type="date" name="availableDate" defaultValue={this.props.form.availableDate} />
-        <Input type="number" name="area" defaultValue={this.props.form.area} />
-        <Input type="number" name="monthlyRent" defaultValue={this.props.form.monthlyRent} />
-        <Input type="number" name="rentalCharges" defaultValue={this.props.form.rentalCharges} />
+        <Input type="date" name="availableDate" defaultValue={form.availableDate} errors={errors} />
+        <Input type="number" name="area" defaultValue={form.area} errors={errors} />
+        <Input type="number" name="monthlyRent" defaultValue={form.monthlyRent} errors={errors} />
+        <Input type="number" name="rentalCharges" defaultValue={form.rentalCharges} errors={errors} />
       </div>
     )
 
     const stepPropertyOptions = (
       <div>
-        <Rooms state={this.props.form} />
-        <NumberRadio name="floor" max={10} state={this.props.form} />
-        <Checkbox name="propertyOptions" choices={this.props.property.propertyOptions} state={this.props.form} />
+        <Rooms {...radioCheckboxProps} />
+        <NumberRadio name="floor" max={10} {...radioCheckboxProps} />
+        <Checkbox name="propertyOptions" choices={property.propertyOptions} {...radioCheckboxProps} />
       </div>
     )
 
     const stepEnergyHeating = (
       <div>
-        <Radio name="heating" choices={this.props.property.heating} state={this.props.form} />
-        <Radio name="energyClass" choices={this.props.property.energyClass} state={this.props.form} noTrad={true} />
+        <Radio name="heating" choices={property.heating} {...radioCheckboxProps} />
+        <Radio name="energyClass" choices={property.energyClass} {...radioCheckboxProps} />
       </div>
     )
 
-    const stepBuildingOptions = <Checkbox name="buildingOptions" choices={this.props.property.buildingOptions} state={this.props.form} />
-    const stepKitchen = <Checkbox name="kitchen" choices={this.props.property.kitchen} state={this.props.form} />
-    const stepBathroom = <Checkbox name="bathroom" choices={this.props.property.bathroom} state={this.props.form} />
+    const stepBuildingOptions = <Checkbox name="buildingOptions" choices={property.buildingOptions} {...radioCheckboxProps} />
+    const stepKitchen = <Checkbox name="kitchen" choices={property.kitchen} {...radioCheckboxProps} />
+    const stepBathroom = <Checkbox name="bathroom" choices={property.bathroom} {...radioCheckboxProps} />
+    const stepNearbyServices = <Checkbox name="nearbyServices" choices={property.nearbyServices} {...radioCheckboxProps} />
+
+    const stepLocation = (
+      <div>
+        <Input type="text" name="address" defaultValue={form.address} errors={errors} />
+        <Input type="text" name="city" defaultValue={form.city} errors={errors} />
+        <Input type="number" name="zipcode" defaultValue={form.zipcode} errors={errors} />
+      </div>
+    )
 
     this.displayStep = [
       stepPropertyType,
@@ -93,6 +116,8 @@ class PropertyForm extends Component {
       stepBuildingOptions,
       stepKitchen,
       stepBathroom,
+      stepNearbyServices,
+      stepLocation
     ]
   }
 
@@ -132,13 +157,23 @@ class PropertyForm extends Component {
   }
 
   isValid(step = this.state.step) {
-    const requiredFields = formRequired['step' + step]
+    let requiredFields = []
+
+    for (let step in formRequired) {
+      if (step <= this.state.step) {
+        requiredFields.push(...formRequired[step])
+      }
+    }
 
     const valid = requiredFields && requiredFields.filter(field => {
       return !(this.props.form[field])
     })
 
-    return !valid || valid.length === 0
+    const isValid = !valid || valid.length === 0
+
+    this.props.storePropertyFormErrors(isValid ? [] : valid)
+
+    return isValid
   }
 
   next() {
@@ -169,6 +204,11 @@ class PropertyForm extends Component {
     this.setState({ step: currentStep })
   }
 
+  // render() {
+  //   console.log(this.props)
+  //   return ''
+  // }
+
   render() {
     this.initSteps()
 
@@ -177,7 +217,7 @@ class PropertyForm extends Component {
       steps.push(
         <button type="button" key={step}
           className={step < this.maxStep ? 'active' : ''}
-          onClick={step <= this.maxStep ? () => this.goToStep(step) : null}
+        // onClick={step <= this.maxStep ? () => this.goToStep(step) : null}
         >{step}</button>
       )
     }
@@ -188,13 +228,13 @@ class PropertyForm extends Component {
           {steps}
         </div>
 
-        {this.displayStep[this.state.step - 1]}
+        {this.displayStep.map((display, index) => (
+          index <= this.state.step - 1 ? (<div key={index} >{display}<br /><hr /></div>) : null
+        ))}
         {/* <Input type="text" name="street" /> */}
         <br />
-        <hr />
-        <br />
         {
-          this.state.step > 1 ? <button type="button" onClick={() => this.setState({ step: this.state.step - 1 })} ><FormattedMessage id='previous' /></button> : null
+          // this.state.step > 1 ? <button type="button" onClick={() => this.setState({ step: this.state.step - 1 })} ><FormattedMessage id='previous' /></button> : null
         }
         {
           this.state.step < steps.length + 1 ? <button type="button" onClick={this.next.bind(this)} ><FormattedMessage id='next' /></button> : null
@@ -208,10 +248,14 @@ class PropertyForm extends Component {
 }
 
 const mapStateToProps = (store) => ({
-  form: store.property
+  form: store.property.form,
+  errors: store.property.errors
 })
 
 export default connect(
   mapStateToProps,
-  { storePropertyForm: storePropertyForm }
+  {
+    storePropertyForm: storePropertyForm,
+    storePropertyFormErrors: storePropertyFormErrors,
+  }
 )(PropertyForm)
