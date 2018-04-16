@@ -22,7 +22,7 @@ const Recapitulatif = ({ form, property }) => (
             const isValueString = typeof value === 'string'
 
             values.push(
-              <span key={input} className="tag" >
+              <li key={input} className="tag" >
                 {
                   value
                     ? <FormattedMessage id={input} />
@@ -33,16 +33,18 @@ const Recapitulatif = ({ form, property }) => (
                     ? <span>{' ' + form[input]}</span>
                     : null
                 }
-              </span>
+              </li>
             )
 
             return false
           })
-          : values.push(<FormattedMessage key={key} id={form[key]} />)
+          : values.push(<li key={key}><FormattedMessage id={form[key]} /></li>)
 
         return (<div key={key} >
           {values.length !== 0 ? title : null}
-          {values}
+          <ul>
+            {values}
+          </ul>
         </div>)
       })
     }
@@ -51,7 +53,7 @@ const Recapitulatif = ({ form, property }) => (
 
 const mapStateToProps = (store) => {
   return {
-    form: store.property
+    form: store.property.form
   }
 }
 

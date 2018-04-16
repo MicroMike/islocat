@@ -3,11 +3,15 @@ import FormattedMessage from 'IntlFormat';
 import { connect } from 'react-redux'
 
 import { storePropertyForm, storePropertyFormErrors } from '../PropertyAction';
-// import * as Property from '../PropertyReducer';
+import { setStepbar } from 'modules/Stepbar/StepbarAction'
 
 import 'modules/Property/assets/propertyForm.less'
 
+import whichStepbar from 'modules/Stepbar/Stepbar'
 import { Radio, NumberRadio, Checkbox, Input } from '../../Form/Form'
+import Recapitulatif from '../components/Recapitulatif';
+
+const Stepbar = whichStepbar('property')
 
 const formRequired = {
   1: [
@@ -15,9 +19,9 @@ const formRequired = {
   ],
   2: [
     'area',
-    // 'rentalCharges',
-    // 'monthlyRent',
-    // 'availableDate'
+    'rentalCharges',
+    'monthlyRent',
+    'availableDate'
   ],
   3: [
     'nbBedroom',
@@ -50,16 +54,11 @@ class PropertyForm extends Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      step: 1,
-      errors: []
-    }
-
     this.form = this.props.form
     this.maxStep = 1
   }
 
-  initSteps() {
+  renderSteps() {
     const form = this.props.form
     const errors = this.props.errors
     const property = this.props.property
@@ -121,6 +120,11 @@ class PropertyForm extends Component {
     ]
   }
 
+  handleSubmit(e) {
+    e.preventDefault();
+    console.log(this.props.form)
+  }
+
   constraint(e) {
     const form = {}
 
@@ -140,6 +144,14 @@ class PropertyForm extends Component {
     return form
   }
 
+  validate(validateFields) {
+    const valid = validateFields && validateFields.filter(field => {
+      return !(this.props.form[field])
+    })
+
+    return valid || []
+  }
+
   update(e) {
     const form = {
       [e.target.name]: e.target.type === 'checkbox'
@@ -149,98 +161,78 @@ class PropertyForm extends Component {
     }
 
     this.props.storePropertyForm(form)
+    setTimeout(() => {
+      this.props.storePropertyFormErrors(this.validate(this.props.errors))
+    }, 0);
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
-    console.log(this.props.form)
-  }
-
-  isValid(step = this.state.step) {
+  isValid(step = this.props.step) {
     let requiredFields = []
 
     for (let step in formRequired) {
-      if (step <= this.state.step) {
+      if (step <= this.props.step) {
         requiredFields.push(...formRequired[step])
       }
     }
 
-    const valid = requiredFields && requiredFields.filter(field => {
-      return !(this.props.form[field])
-    })
+    const isValid = this.validate(requiredFields)
+    this.props.storePropertyFormErrors(isValid)
 
-    const isValid = !valid || valid.length === 0
-
-    this.props.storePropertyFormErrors(isValid ? [] : valid)
-
-    return isValid
+    return isValid.length === 0
   }
 
   next() {
-    let step = this.state.step
-
     if (this.isValid()) {
-      this.setState({ step: ++step })
-      this.maxStep = step > this.maxStep ? step : this.maxStep
+      this.props.setStepbar(this.props.step + 1, 'OWNER_FORM_STEP')
     }
     else {
 
     }
   }
 
-  goToStep(step) {
-    let currentStep = this.state.step
+  // goToStep(step) {
+  //   let currentStep = this.props.step
 
-    if (step < currentStep) {
-      this.setState({ step: step })
-      return
-    }
+  //   if (step < currentStep) {
+  //     this.setState({ step: step })
+  //     return
+  //   }
 
-    for (currentStep; currentStep < step; currentStep++) {
-      if (!this.isValid(currentStep)) {
-        break
-      }
-    }
-    this.setState({ step: currentStep })
-  }
-
-  // render() {
-  //   console.log(this.props)
-  //   return ''
+  //   for (currentStep; currentStep < step; currentStep++) {
+  //     if (!this.isValid(currentStep)) {
+  //       break
+  //     }
+  //   }
+  //   this.setState({ step: currentStep })
   // }
 
   render() {
-    this.initSteps()
-
-    let steps = []
-    for (let step = 1; step <= this.displayStep.length; step++) {
-      steps.push(
-        <button type="button" key={step}
-          className={step < this.maxStep ? 'active' : ''}
-        // onClick={step <= this.maxStep ? () => this.goToStep(step) : null}
-        >{step}</button>
-      )
-    }
+    this.renderSteps()
+    const length = this.displayStep.length
 
     return (
       <form id="owner-form" onChange={(e) => this.update(e)} onSubmit={this.handleSubmit.bind(this)} >
         <div id="steps">
-          {steps}
+          <Stepbar length={length} />
         </div>
 
-        {this.displayStep.map((display, index) => (
-          index <= this.state.step - 1 ? (<div key={index} >{display}<br /><hr /></div>) : null
-        ))}
+        {
+          this.props.step > this.displayStep.length
+            ? <Recapitulatif property={this.props.property} />
+            : this.displayStep.map((display, index) => (
+              index <= this.props.step - 1 ? (<div key={index} >{display}<br /><hr /></div>) : null
+            ))
+        }
         {/* <Input type="text" name="street" /> */}
         <br />
         {
-          // this.state.step > 1 ? <button type="button" onClick={() => this.setState({ step: this.state.step - 1 })} ><FormattedMessage id='previous' /></button> : null
+          // this.props.step > 1 ? <button type="button" onClick={() => this.setState({ step: this.props.step - 1 })} ><FormattedMessage id='previous' /></button> : null
         }
         {
-          this.state.step < steps.length + 1 ? <button type="button" onClick={this.next.bind(this)} ><FormattedMessage id='next' /></button> : null
+          this.props.step < length + 1 ? <button type="button" onClick={this.next.bind(this)} ><FormattedMessage id='next' /></button> : null
         }
         {
-          this.state.step === steps.length + 1 ? <button type="submit" ><FormattedMessage id='submit' /></button> : null
+          this.props.step === length + 1 ? <button type="submit" ><FormattedMessage id='submit' /></button> : null
         }
       </form>
     )
@@ -249,7 +241,8 @@ class PropertyForm extends Component {
 
 const mapStateToProps = (store) => ({
   form: store.property.form,
-  errors: store.property.errors
+  errors: store.property.errors,
+  step: store.property.step,
 })
 
 export default connect(
@@ -257,5 +250,6 @@ export default connect(
   {
     storePropertyForm: storePropertyForm,
     storePropertyFormErrors: storePropertyFormErrors,
+    setStepbar: setStepbar,
   }
 )(PropertyForm)

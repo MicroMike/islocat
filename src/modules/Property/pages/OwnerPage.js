@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Helmet from 'react-helmet';
 
 import Form from '../components/PropertyForm';
-import Recapitulatif from '../components/Recapitulatif';
 
 const Property = {
   propertyType: [
@@ -74,7 +73,6 @@ export class OwnerPage extends Component {
       <div>
         <Helmet title="Owner" />
         <Form property={Property} />
-        <Recapitulatif property={Property} />
       </div>
     );
   }

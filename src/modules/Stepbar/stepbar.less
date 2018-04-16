@@ -1,0 +1,39 @@
+#steps {
+    margin-left: 15px;
+    button {
+        border: none;
+        min-width: 30px;
+        text-align: center;
+        height: 30px;
+        border-radius: 30px;
+        position: relative;
+        margin: 0 13px;
+        &:before,
+        &:after {
+            content: '';
+            width: 15px;
+            height: 15px;
+            background: #dddddd;
+            position: absolute;
+        }
+        &:before {
+            left: -13px;
+        }
+        &:after {
+            right: 43px;
+            z-index: -1;
+        }
+        &.active {
+            color: #fff;
+            background: #74C080;
+            cursor: pointer;
+            &:before,
+            &:after {
+                background: #74C080;
+            }
+        }
+        &:focus {
+            outline: none;
+        }
+    }
+}

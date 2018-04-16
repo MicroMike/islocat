@@ -1,7 +1,8 @@
 // Initial State
 const initialState = {
   form: {},
-  errors: []
+  errors: [],
+  step: 1
 };
 
 const PropertyReducer = (state = initialState, action) => {
@@ -11,12 +12,20 @@ const PropertyReducer = (state = initialState, action) => {
     case 'OWNER_FORM':
       return {
         ...state,
-        form: values
+        form: {
+          ...state.form,
+          ...values
+        }
       }
     case 'FORM_ERRORS':
       return {
         ...state,
         errors: action.errors
+      }
+    case 'OWNER_FORM_STEP':
+      return {
+        ...state,
+        step: action.step
       }
     default:
       return state;

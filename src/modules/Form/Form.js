@@ -10,18 +10,18 @@ export const Input = (props) => {
     ? label
     : props.name
 
-  console.log(errors)
-  // const errorClass = errors.indexOf(formattedMessage) >= 0 ? 'error' : ''
+  // console.log(errors)
+  const errorClass = errors && errors.indexOf(formattedMessage) >= 0 ? 'error' : ''
   return (
     <label htmlFor={props.id} className={checked} >
-      {<FormattedMessage id={formattedMessage} /*className={errorClass}*/ />}
+      {<FormattedMessage id={formattedMessage} className={errorClass} />}
       <input {...input} checked={checked} onChange={() => { }} />
     </label>
   )
 }
 
 const RadioCheckbox = ({ type, choices, form, name, errors }) => {
-  const errorClass = errors.indexOf(name) >= 0 ? 'error' : ''
+  const errorClass = errors && errors.indexOf(name) >= 0 ? 'error' : ''
 
   return (
     <div className={'radio-checkbox ' + type} >
@@ -43,7 +43,6 @@ const RadioCheckbox = ({ type, choices, form, name, errors }) => {
             id={id}
             type={type}
             label={choice}
-            errors={errors}
           />
         )
       })}
@@ -52,6 +51,7 @@ const RadioCheckbox = ({ type, choices, form, name, errors }) => {
 }
 
 export const NumberRadio = (props) => {
+  const errorClass = props.errors && props.errors.indexOf(props.name) >= 0 ? 'error' : ''
   const choices = []
   let i = props.min || 0
 
@@ -69,14 +69,13 @@ export const NumberRadio = (props) => {
         label={choice}
         value={value}
         isChecked={props.form[props.name] === value}
-        errors={props.errors}
       />
     )
   }
 
   return (
     <div className="radio-checkbox radio" >
-      <FormattedMessage id={props.name} />
+      <FormattedMessage id={props.name} className={errorClass} />
       {choices}
     </div>
   )
