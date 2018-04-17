@@ -54,7 +54,7 @@ const Property = {
     'individualGas',
     'other'
   ],
-  energyClass: [{ label: 'pending' }, 'A', 'B', 'C', 'D', 'E', 'F', 'G'],
+  energyClass: ['pending', 'A', 'B', 'C', 'D', 'E', 'F', 'G'],
   nearbyServices: [
     'school',
     'shops',

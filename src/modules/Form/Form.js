@@ -27,8 +27,6 @@ const RadioCheckbox = ({ type, choices, form, name, errors }) => {
     <div className={'radio-checkbox ' + type} >
       <FormattedMessage id={name} className={errorClass} />
       {choices.map(choice => {
-        const isString = typeof choice === 'string'
-        choice = isString ? choice : choice.label
         const id = name + '-' + choice
 
         const attr = {

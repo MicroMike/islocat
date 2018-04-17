@@ -212,9 +212,7 @@ class PropertyForm extends Component {
 
     return (
       <form id="owner-form" onChange={(e) => this.update(e)} onSubmit={this.handleSubmit.bind(this)} >
-        <div id="steps">
-          <Stepbar length={length} />
-        </div>
+        <Stepbar length={length} />
 
         {
           this.props.step > this.displayStep.length

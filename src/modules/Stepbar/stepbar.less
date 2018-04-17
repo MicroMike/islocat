@@ -1,4 +1,4 @@
-#steps {
+[id$="-stepbar"] {
     margin-left: 15px;
     button {
         border: none;
@@ -35,5 +35,12 @@
         &:focus {
             outline: none;
         }
+    }
+    &.stick {
+        position: fixed;
+        top: 0;
+        background: #fff;
+        padding: 15px;
+        margin: 0;
     }
 }
