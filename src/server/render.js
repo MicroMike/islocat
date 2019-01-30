@@ -20,6 +20,7 @@ const renderFullPage = (markup, preloadedState) => {
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta charset="utf-8" />
         <title>Welcome to Razzle</title>
+        <meta name="propeller" content="723eab3b95cfd3adfe525ab6e3fc6c18">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         ${assets.client.css
       ? `<link rel="stylesheet" href="${assets.client.css}">`
